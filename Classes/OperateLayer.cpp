@@ -106,58 +106,73 @@ void OperateLayer::onKeyPressed(cocos2d::EventKeyboard::KeyCode code, cocos2d::E
 	switch (code)
 	{
 	case cocos2d::EventKeyboard::KeyCode::KEY_A:
+		keys[code] = true;
 		move1 = Point(-5, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+		keys[code] = true;
 		move2 = Point(-5, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_D:
+		keys[code] = true;
 		move1 = Point(5, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+		keys[code] = true;
 		move2 = Point(5, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_W:
+		keys[code] = true;
 		move1 = Point(0, 5);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW:
+		keys[code] = true;
 		move2 = Point(0, 5);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_S:
+		keys[code] = true;
 		move1 = Point(0, -5);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW:
+		keys[code] = true;
 		move2 = Point(0, -5);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_J:
+		keys[code] = true;
 		angle += 0.2;
 		if (angle > M_PI / 2) angle = M_PI / 2;
 		hero1->rotateArrow(angle);
 		//schedule(schedule_selector(OperateLayer::updateAngle, 0.1f));
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_K:
+		keys[code] = true;
 		angle -= 0.2;
 		if (angle < -M_PI / 2) angle = -M_PI / 2;
 		hero1->rotateArrow(angle);
 		//schedule(schedule_selector(OperateLayer::updateAngle, 0.1f));
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_9:
+		keys[code] = true;
 		angle += 0.2;
 		if (angle > M_PI / 2) angle = M_PI / 2;
 		hero2->rotateArrow(angle);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_8:
+		keys[code] = true;
 		angle -= 0.2;
 		if (angle < -M_PI / 2) angle = -M_PI / 2;
 		hero2->rotateArrow(angle);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_SPACE:
+		keys[code] = true;
 		schedule(schedule_selector(OperateLayer::updatePercent1, 0.1f));
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_0:
+		keys[code] = true;
 		schedule(schedule_selector(OperateLayer::updatePercent2, 0.1f));
 		break;
 	default:
+		keys[code] = true;
 		break;
 	}
 }
@@ -167,54 +182,83 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 	switch (code)
 	{
 	case cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-		move2 = Point(0, 0);
+		keys[code] = false;
+		if (keys[EventKeyboard::KeyCode::KEY_RIGHT_ARROW]) move2 = Point(5, 0);
+		else move2 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_A:
-		move1 = Point(0, 0);
+		keys[code] = false;
+		if (keys[EventKeyboard::KeyCode::KEY_D]) move1 = Point(5, 0);
+		else move1 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-		move2 = Point(0, 0);
+		keys[code] = false;
+		if (keys[EventKeyboard::KeyCode::KEY_LEFT_ARROW]) move2 = Point(-5, 0);
+		else move2 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_D:
-		move1 = Point(0, 0);
+		keys[code] = false;
+		if (keys[EventKeyboard::KeyCode::KEY_A]) move1 = Point(-5, 0);
+		else move1 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW:
-		move2 = Point(0, 0);
+		keys[code] = false;
+		if (keys[EventKeyboard::KeyCode::KEY_DOWN_ARROW]) move2 = Point(0, -5);
+		else move2 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_W:
-		move1 = Point(0, 0);
+		keys[code] = false;
+		if (keys[EventKeyboard::KeyCode::KEY_S]) move1 = Point(0, -5);
+		else move1 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-		move2 = Point(0, 0);
+		keys[code] = false;
+		if (keys[EventKeyboard::KeyCode::KEY_UP_ARROW]) move2 = Point(0, 5);
+		else move2 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_S:
-		move1 = Point(0, 0);
+		keys[code] = false;
+		if (keys[EventKeyboard::KeyCode::KEY_W]) move1 = Point(0, 5);
+		else move1 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_J:
+		keys[code] = false;
 		//angle = 0;
 		//unschedule(schedule_selector(OperateLayer::updateAngle, 0.1f));
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_K:
+		keys[code] = false;
 		//angle = 0;
 		//unschedule(schedule_selector(OperateLayer::updateAngle, 0.1f));
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_8:
+		keys[code] = false;
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_9:
+		keys[code] = false;
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_SPACE:
+
+		keys[code] = false;
+
 		SimpleAudioEngine::getInstance()->playEffect("music/Fire1.wav", false, 1.0f, 1.0f, 1.0f);
+
 		unschedule(schedule_selector(OperateLayer::updatePercent1, 0.1f));
 		hero1->pAttack();
 		hero1->setPower(0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_0:
+
+		keys[code] = false;
+
 		SimpleAudioEngine::getInstance()->playEffect("music/Fire3.wav", false, 1.0f, 1.0f, 1.0f);
+
 		unschedule(schedule_selector(OperateLayer::updatePercent2, 0.1f));
 		hero2->pAttack();
 		hero2->setPower(0);
 		break;
 	default:
+		keys[code] = false;
 		break;
 	}
 }
@@ -223,7 +267,6 @@ void OperateLayer::update(float f)
 {
 	hero1->pWalk(move1);
 	hero2->pWalk(move2);
-	
 }
 
 

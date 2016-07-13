@@ -28,6 +28,8 @@ private:
 	cocos2d::Point move1;  // 角色移动距离
 	cocos2d::Point move2;  // 角色移动距离
 	float angle;
+	//存储键盘是否按下状态
+	std::map<EventKeyboard::KeyCode, bool> keys;
 };
 
 #endif
