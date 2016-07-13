@@ -52,6 +52,7 @@ bool VersusModeScene::init()
 	displayPlayer();
 
 	auto audio = SimpleAudioEngine::getInstance();
+	audio->preloadBackgroundMusic("music/BGM_1.mp3");
 	audio->playBackgroundMusic("music/gateMap.wav", true);
 	return true;
 }
@@ -202,7 +203,7 @@ void VersusModeScene::gateOneCallBack(Ref * pSender)
 	else if (flag == 2) {
 		if (player2 != NULL)
 			pl2->removeFromParent();
-		pl1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_1.png"));
+		pl2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_1.png"));
 		pl2->setPosition(Vec2(visibleSize.width - 20 - pl2->getContentSize().width + origin.x, pl2->getContentSize().height/2 + origin.y));
 		addChild(pl2, 1);
 		player2 = 1;
@@ -377,6 +378,7 @@ void VersusModeScene::mapThreeCallback(Ref * pSender)
 void VersusModeScene::startCallback(Ref * pSender)
 {
 	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 	Director::getInstance()->replaceScene(GameScene::createScene(player1, prop1, player2, prop2, background));
 }
 

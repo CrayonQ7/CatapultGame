@@ -13,6 +13,8 @@ public:
 	bool init(int p, Vec2 pos, int d);
 	static Hero* create(int p, Vec2 pos, int d);  // p代表哪个角色，d代表哪个玩家
 
+	int p;
+
 	void  rotateArrow(float angle);  // 旋转武器
 	void shootArrow();  // 发射
 	void finishRunAction();
