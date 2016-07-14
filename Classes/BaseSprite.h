@@ -45,8 +45,7 @@ public:
 
 	std::function<void(void)> pAttack; // 表示 void pAttack();
 
-
-									   // “立即返回空闲状态”回调函数
+	// “立即返回空闲状态”回调函数
 	cocos2d::CallFunc* createIdleCallbackFunc();
 protected:
 	// 根据图片路径，帧数，每秒显示的帧数来创建动画

@@ -1,7 +1,7 @@
 #include "VersusModeScene.h"
-
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
+#include "ConfigScene.h"
 USING_NS_CC;
 using namespace CocosDenshion;
 
@@ -37,7 +37,9 @@ bool VersusModeScene::init()
 	prop1 = 0;
 	prop2 = 0;
 	background = 0;
-	
+	backgroundVolume = effectVolume = 0.5f;
+	curBgm = 0;
+
 	selectGateMenu = SelectGate::create();
 	selectGateMenu->setPosition(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 20);
 	addChild(selectGateMenu, 2);
@@ -47,17 +49,47 @@ bool VersusModeScene::init()
 	// * -----------------------背景图片---------------------------------- *
 	auto backGround = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("background.png"));
 	backGround->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+	auto scaleX = backGround->getTextureRect().getMaxX();
+	auto scaleY = backGround->getTextureRect().getMaxY();
+	backGround->setScaleX(visibleSize.width / scaleX);
+	backGround->setScaleY(visibleSize.height / scaleY);
 	this->addChild(backGround, 0);
 	
+	//  * -----------------------可以跳转到设置界面的按钮---------------------------------- *
+	configItem = MenuItemSprite::create(
+		Sprite::create("icons/ConfigItemNormal.png"),
+		Sprite::create("icons/ConfigItemSelected.png"),
+		CC_CALLBACK_1(VersusModeScene::configMenuCallback, this));
+	configItem->setPosition(Vec2(origin.x + visibleSize.width - configItem->getContentSize().width,
+		origin.y + visibleSize.height - configItem->getContentSize().height));
+	auto menu = Menu::create(configItem, NULL);
+	menu->setPosition(Vec2::ZERO);
+	addChild(menu, 1);
+
+	// * -----------------------声音开关按钮---------------------------------- *
+	soundOn = MenuItemSprite::create(
+		Sprite::create("icons/SoundOn.png"),
+		Sprite::create("icons/SoundOn.png"));
+	soundOff = MenuItemSprite::create(
+		Sprite::create("icons/SoundOff.png"),
+		Sprite::create("icons/SoundOff.png"));
+	soundStateToggle = MenuItemToggle::createWithCallback(CC_CALLBACK_1(VersusModeScene::soundCallback, this), soundOn, soundOff, NULL);
+	soundStateToggle->setPosition(Vec2(origin.x + soundStateToggle->getContentSize().width,
+		origin.y + visibleSize.height - soundStateToggle->getContentSize().height));
+	if (backgroundVolume <= 0.01 && effectVolume <= 0.01) soundStateToggle->setSelectedIndex(1);
+	soundState = Menu::create(soundStateToggle, NULL);
+	soundState->setPosition(Vec2::ZERO);
+	addChild(soundState, 1);
+
 	// * -----------------------加载玩家---------------------------------- *
 	displayPlayer();
 
 	// * -----------------------加载音效---------------------------------- *
 	auto audio = SimpleAudioEngine::getInstance();
-	audio->preloadBackgroundMusic("music/BGM_1.mp3");
 	audio->playBackgroundMusic("music/gateMap.wav", true);
 	return true;
 }
+
 
 // * -----------------------------------------------------显示函数-------------------------------------------------------- *
 
@@ -378,6 +410,8 @@ void VersusModeScene::mapThreeCallback(Ref * pSender)
 
 void VersusModeScene::startCallback(Ref * pSender)
 {
+	// 播放点击音效
+	SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
 	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
 	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 	Director::getInstance()->replaceScene(GameScene::createScene(player1, prop1, player2, prop2, background));
@@ -398,4 +432,37 @@ void VersusModeScene::restartCallback(Ref * pSender)
 	bg->removeFromParent();
 	start->removeFromParent();
 	restart->removeFromParent();
+}
+
+void VersusModeScene::configMenuCallback(cocos2d::Ref * pSender)
+{
+	// 播放点击音效
+	SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
+	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+	// 将当前界面的音量传入设置界面
+	auto configScene = ConfigScene::createScene();
+	auto curLayer = (ConfigScene*)configScene->getChildren().at(1);
+	curLayer->backgroundVolume = backgroundVolume;
+	curLayer->effectVolume = effectVolume;
+	curLayer->curBgm = curBgm;
+
+	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+	Director::getInstance()->replaceScene(CCTransitionMoveInT::create(0.5f, configScene));
+}
+
+void VersusModeScene::soundCallback(cocos2d::Ref * pSender)
+{
+	// 播放点击音效
+	SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
+	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+	if (backgroundVolume > 0 || effectVolume > 0) {
+		backgroundVolume = effectVolume = 0;
+		SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(backgroundVolume);
+		SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
+		}
+	else if (backgroundVolume == 0 && effectVolume == 0) {
+		backgroundVolume = effectVolume = 0.5f;
+		SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(backgroundVolume);
+		SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
+	}
 }

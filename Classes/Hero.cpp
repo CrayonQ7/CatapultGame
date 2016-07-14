@@ -171,7 +171,8 @@ void Hero::loadGate_1()
 	this->setIdleAction(RepeatForever::create(Animate::create(idleAnimation)));
 
 	auto walkAnimation = this->createAnimation("Gate_1_Walk_%d.png", 3, 6);  // 行走动画只有7帧  每秒14帧
-	this->setWalkAction(RepeatForever::create(Animate::create(walkAnimation)));
+	/*this->setWalkAction(RepeatForever::create(Animate::create(walkAnimation)));*/
+	this->setWalkAction(Sequence::create(Animate::create(walkAnimation), BaseSprite::createIdleCallbackFunc(), NULL));
 
 	auto attackAnimation = this->createAnimation("Gate_1_Attack_%d.png", 2, 4);  // 攻击动画只有7帧  每秒14帧
 	this->setAttackAction(Sequence::create(Animate::create(attackAnimation), BaseSprite::createIdleCallbackFunc(), NULL));  // 攻击之后立马变为空闲状态
@@ -220,7 +221,8 @@ void Hero::loadGate_1()
 		playerarrow->setBarChangeRate(Vec2(1, 0));
 		playerarrow->setPercentage(0);
 
-		playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		//playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		playerarrow->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		this->addChild(playerarrow, 3);
 		//playerarrowBg->setVisible(false);
 	}
@@ -239,7 +241,8 @@ void Hero::loadGate_2()
 	this->setIdleAction(RepeatForever::create(Animate::create(idleAnimation)));
 
 	auto walkAnimation = this->createAnimation("Gate_2_Walk_%d.png", 3, 6);  // 行走动画只有7帧  每秒14帧
-	this->setWalkAction(RepeatForever::create(Animate::create(walkAnimation)));
+	//this->setWalkAction(RepeatForever::create(Animate::create(walkAnimation)));
+	this->setWalkAction(Sequence::create(Animate::create(walkAnimation), BaseSprite::createIdleCallbackFunc(), NULL));
 
 	auto attackAnimation = this->createAnimation("Gate_2_Attack_%d.png", 2, 4);  // 攻击动画只有7帧  每秒14帧
 	this->setAttackAction(Sequence::create(Animate::create(attackAnimation), BaseSprite::createIdleCallbackFunc(), NULL));  // 攻击之后立马变为空闲状态
@@ -290,7 +293,8 @@ void Hero::loadGate_2()
 		playerarrow->setBarChangeRate(Vec2(1, 0));
 		playerarrow->setPercentage(0);
 
-		playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		//playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		playerarrow->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		this->addChild(playerarrow, 3);
 		//playerarrowBg->setVisible(false);
 	}
@@ -309,7 +313,8 @@ void Hero::loadGate_3()
 	this->setIdleAction(RepeatForever::create(Animate::create(idleAnimation)));
 
 	auto walkAnimation = this->createAnimation("Gate_3_Walk_%d.png", 3, 6);  // 行走动画只有7帧  每秒14帧
-	this->setWalkAction(RepeatForever::create(Animate::create(walkAnimation)));
+	//this->setWalkAction(RepeatForever::create(Animate::create(walkAnimation)));
+	this->setWalkAction(Sequence::create(Animate::create(walkAnimation), BaseSprite::createIdleCallbackFunc(), NULL));
 
 	auto attackAnimation = this->createAnimation("Gate_3_Attack_%d.png", 2, 4);  // 攻击动画只有7帧  每秒14帧
 	this->setAttackAction(Sequence::create(Animate::create(attackAnimation), BaseSprite::createIdleCallbackFunc(), NULL));  // 攻击之后立马变为空闲状态
@@ -357,7 +362,8 @@ void Hero::loadGate_3()
 		playerarrow->setBarChangeRate(Vec2(1, 0));
 		playerarrow->setPercentage(0);
 
-		playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		//playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		playerarrow->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		this->addChild(playerarrow, 3);
 		//playerarrowBg->setVisible(false);
 	}

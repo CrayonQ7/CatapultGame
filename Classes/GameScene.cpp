@@ -1,6 +1,8 @@
 #include "GameScene.h"
 #include "GameLayer.h"
 #include "OperateLayer.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 USING_NS_CC;
 
 cocos2d::Scene * GameScene::createScene(int pl1, int pr1, int pl2, int pr2, int bg)
