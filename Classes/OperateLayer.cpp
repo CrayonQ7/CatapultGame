@@ -171,6 +171,12 @@ void OperateLayer::onKeyPressed(cocos2d::EventKeyboard::KeyCode code, cocos2d::E
 		keys[code] = true;
 		schedule(schedule_selector(OperateLayer::updatePercent2, 0.1f));
 		break;
+	case cocos2d::EventKeyboard::KeyCode::KEY_I:
+		hero1->pUseProp();
+		break;
+	case cocos2d::EventKeyboard::KeyCode::KEY_5:
+		hero2->pUseProp();
+		break;
 	default:
 		keys[code] = true;
 		break;
@@ -184,42 +190,66 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 	case cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_RIGHT_ARROW]) move2 = Point(5, 0);
-		else move2 = Point(0, 0);
+		else {
+			move2 = Point(0, 0);
+			/*hero2->pStop();*/
+		}
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_A:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_D]) move1 = Point(5, 0);
-		else move1 = Point(0, 0);
+		else {
+			move1 = Point(0, 0);
+			/*hero1->pStop();*/
+		}
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_LEFT_ARROW]) move2 = Point(-5, 0);
-		else move2 = Point(0, 0);
+		else {
+			move2 = Point(0, 0);
+			/*hero2->pStop();*/
+		}
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_D:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_A]) move1 = Point(-5, 0);
-		else move1 = Point(0, 0);
+		else {
+			move1 = Point(0, 0);
+			/*hero1->pStop();*/
+		}
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_DOWN_ARROW]) move2 = Point(0, -5);
-		else move2 = Point(0, 0);
+		else {
+			move2 = Point(0, 0);
+			/*hero2->pStop();*/
+		}
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_W:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_S]) move1 = Point(0, -5);
-		else move1 = Point(0, 0);
+		else {
+			move1 = Point(0, 0);
+			/*hero1->pStop();*/
+		}
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_UP_ARROW]) move2 = Point(0, 5);
-		else move2 = Point(0, 0);
+		else {
+			move2 = Point(0, 0);
+			/*hero2->pStop();*/
+		}
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_S:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_W]) move1 = Point(0, 5);
-		else move1 = Point(0, 0);
+		else {
+			move1 = Point(0, 0);
+			/*hero1->pStop();*/
+		}
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_J:
 		keys[code] = false;
@@ -256,6 +286,10 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 		unschedule(schedule_selector(OperateLayer::updatePercent2, 0.1f));
 		hero2->pAttack();
 		hero2->setPower(0);
+		break;
+	case cocos2d::EventKeyboard::KeyCode::KEY_I:
+		break;
+	case cocos2d::EventKeyboard::KeyCode::KEY_5:
 		break;
 	default:
 		keys[code] = false;

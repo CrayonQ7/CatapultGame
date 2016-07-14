@@ -1,5 +1,6 @@
 #include "GameOverScene.h"
 #include "SimpleAudioEngine.h"
+USING_NS_CC;
 using namespace CocosDenshion;
 // 传入一个RenderTexture
 // 相当于一个正在运行的游戏的截图作为这个暂停对话框的背景

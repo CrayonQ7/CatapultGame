@@ -10,10 +10,12 @@ class Hero : public BaseSprite
 public:
 	Hero();
 	~Hero();
-	bool init(int p, Vec2 pos, int d);
-	static Hero* create(int p, Vec2 pos, int d);  // p代表哪个角色，d代表哪个玩家
+	bool init(int pl, int pr, Vec2 pos, int d);
+	static Hero* create(int pl, int pr, Vec2 pos, int d);  // p代表哪个英雄，d代表哪个玩家
 
-	int p;
+	int pl;  // 代表哪个英雄
+	int pr;  // 代表哪个道具
+	int d;  // 代表哪个玩家操控
 
 	void  rotateArrow(float angle);  // 旋转武器
 	void shootArrow();  // 发射
@@ -25,11 +27,14 @@ public:
 	void loadGate_3();
 	std::function<void(cocos2d::Point)> pWalk;
 	std::function<void(void)> pStop;
+	std::function<void(void)> pUseProp;
 	float power;  // 蓄力
 	bool isRunAttackAction;
 	
 	void setPower(float p);
 	void createHpBar(int p);
+
+
 
 	cocos2d::Vector<Sprite*> bullets;  // 这个英雄发射的子弹
 	ProgressTimer* playerarrow;
@@ -51,7 +56,7 @@ private:
 
 	Vec2 playerPos;  // 英雄位置
 	float rotateRadians;
-	int d;  // 代表哪个玩家操控
+	
 	
 };
 

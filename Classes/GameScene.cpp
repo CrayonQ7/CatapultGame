@@ -3,10 +3,10 @@
 #include "OperateLayer.h"
 USING_NS_CC;
 
-cocos2d::Scene * GameScene::createScene(int pl1, const char * pr1, int pl2, const char* pr2, int bg)
+cocos2d::Scene * GameScene::createScene(int pl1, int pr1, int pl2, int pr2, int bg)
 {
 	auto scene = Scene::create();
-	auto gameLayer = GameLayer::create(pl1, pl2, bg);
+	auto gameLayer = GameLayer::create(pl1, pr1, pl2, pr2, bg);
 	auto operateLayer = OperateLayer::create();
 	operateLayer->setHero1(gameLayer->getHero1());
 	operateLayer->setHero2(gameLayer->getHero2());

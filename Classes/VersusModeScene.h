@@ -21,16 +21,17 @@ public:
 
 	// *-----------------------需要向下传递的数据----------------------------------*
 
-	    // 玩家选择的英雄、道具、地图路径
+	    // 玩家选择的英雄、道具、地图编号
 	int player1;
-	cocos2d::Sprite* pl1;
+	int prop1;
 	int player2;
-	cocos2d::Sprite* pl2;
-	const char* prop1;
-	cocos2d::Sprite* pr1;
-	const char* prop2;
-	cocos2d::Sprite* pr2;
+	int prop2;
 	int background;
+
+	cocos2d::Sprite* pl1;
+	cocos2d::Sprite* pr1;
+	cocos2d::Sprite* pl2;
+	cocos2d::Sprite* pr2;
 	cocos2d::Sprite* bg;
 
 

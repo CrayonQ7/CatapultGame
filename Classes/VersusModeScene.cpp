@@ -27,15 +27,16 @@ bool VersusModeScene::init()
 		return false;
 	}
 
+	// * -----------------------初始化---------------------------------- *
 	visibleSize = Director::getInstance()->getVisibleSize();
 	origin = Director::getInstance()->getVisibleOrigin();
 
 	flag = 0;
-	player1 = NULL;
-	player2 = NULL;
-	prop1 = NULL;
-	prop2 = NULL;
-	background = NULL;
+	player1 = 0;
+	player2 = 0;
+	prop1 = 0;
+	prop2 = 0;
+	background = 0;
 	
 	selectGateMenu = SelectGate::create();
 	selectGateMenu->setPosition(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 20);
@@ -43,14 +44,15 @@ bool VersusModeScene::init()
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("plist/VersusModeScene.plist");
 
-
 	// * -----------------------背景图片---------------------------------- *
 	auto backGround = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("background.png"));
 	backGround->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 	this->addChild(backGround, 0);
 	
+	// * -----------------------加载玩家---------------------------------- *
 	displayPlayer();
 
+	// * -----------------------加载音效---------------------------------- *
 	auto audio = SimpleAudioEngine::getInstance();
 	audio->preloadBackgroundMusic("music/BGM_1.mp3");
 	audio->playBackgroundMusic("music/gateMap.wav", true);
@@ -58,9 +60,10 @@ bool VersusModeScene::init()
 }
 
 // * -----------------------------------------------------显示函数-------------------------------------------------------- *
+
+    // * -----------------------加载玩家图片---------------------------------- *
 void VersusModeScene::displayPlayer()
 {
-	// * -----------------------加载玩家图片---------------------------------- *
 	player1MenuItem = MenuItemSprite::create(
 		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("player1.png")),
 		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("player1.png")),
@@ -78,10 +81,9 @@ void VersusModeScene::displayPlayer()
 	addChild(menuPlayer, 1);
 }
 
+    // * -----------------------加载英雄图片---------------------------------- *
 void VersusModeScene::displayGate()
 {
-	// * -----------------------加载英雄图片---------------------------------- *
-
 	auto gateOneItem = MenuItemSprite::create(
 		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_1_1.png")),
 		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_1_2.png")),
@@ -102,10 +104,9 @@ void VersusModeScene::displayGate()
 	selectGateMenu->addMenuItem(gateThreeItem);
 }
 
+    // * -----------------------加载道具图片---------------------------------- *
 void VersusModeScene::displayPropGate()
 {
-	// * -----------------------加载道具图片---------------------------------- *
-
 	auto propOneItem = MenuItemSprite::create(
 		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_1_1.png")),
 		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_1_2.png")),
@@ -126,10 +127,9 @@ void VersusModeScene::displayPropGate()
 	selectGateMenu->addMenuItem(propThreeItem);
 }
 
+    // * -----------------------加载地图图片---------------------------------- *
 void VersusModeScene::displayMapGate()
 {
-	// * -----------------------加载地图图片---------------------------------- *
-
 	auto mapOneItem = MenuItemSprite::create(
 		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("map_1_1.png")),
 		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("map_1_2.png")),
@@ -150,6 +150,7 @@ void VersusModeScene::displayMapGate()
 	selectGateMenu->addMenuItem(mapThreeItem);
 }
 
+    // * -----------------------加载确认按钮---------------------------------- *
 void VersusModeScene::displayButton()
 {
 	start = MenuItemSprite::create(
@@ -268,7 +269,7 @@ void VersusModeScene::propOneCallback(Ref * pSender)
 		pr1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_1.png"));
 		pr1->setPosition(Vec2(pr1->getContentSize().width + origin.x, pr1->getContentSize().height / 2 + origin.y + 50));
 		addChild(pr1, 1);
-		prop1 = "Prop_1";
+		prop1 = 1;
 		player1MenuItem->setScale(1.0f);
 	}
 	else if (flag == 2)
@@ -277,7 +278,7 @@ void VersusModeScene::propOneCallback(Ref * pSender)
 		pr2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_1.png"));
 		pr2->setPosition(Vec2(visibleSize.width - pr2->getContentSize().width + origin.x, pr2->getContentSize().height / 2 + origin.y + 50));
 		addChild(pr2, 1);
-		prop2 = "Prop_1";
+		prop2 = 1;
 		player2MenuItem->setScale(1.0f);
 	}
 	selectGateMenu->clearGate();  // 隐藏选道具菜单
@@ -294,7 +295,7 @@ void VersusModeScene::propTwoCallback(Ref * pSender)
 		pr1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_2.png"));
 		pr1->setPosition(Vec2(pr1->getContentSize().width + origin.x, pr1->getContentSize().height / 2 + origin.y + 50));
 		addChild(pr1, 1);
-		prop1 = "Prop_2";
+		prop1 = 2;
 		player1MenuItem->setScale(1.0f);
 	}
 	else if (flag == 2)
@@ -303,7 +304,7 @@ void VersusModeScene::propTwoCallback(Ref * pSender)
 		pr2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_2.png"));
 		pr2->setPosition(Vec2(visibleSize.width - pr2->getContentSize().width + origin.x, pr2->getContentSize().height / 2 + origin.y + 50));
 		addChild(pr2, 1);
-		prop2 = "Prop_2";
+		prop2 = 2;
 		player2MenuItem->setScale(1.0f);
 	}
 	selectGateMenu->clearGate();  // 隐藏选道具菜单
@@ -320,7 +321,7 @@ void VersusModeScene::propThreeCallback(Ref * pSender)
 		pr1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_3.png"));
 		pr1->setPosition(Vec2(pr1->getContentSize().width + origin.x, pr1->getContentSize().height / 2 + origin.y + 50));
 		addChild(pr1, 1);
-		prop1 = "Prop_3";
+		prop1 = 3;
 		player1MenuItem->setScale(1.0f);
 	}
 	else if (flag == 2)
@@ -329,7 +330,7 @@ void VersusModeScene::propThreeCallback(Ref * pSender)
 		pr2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_3.png"));
 		pr2->setPosition(Vec2(visibleSize.width - pr2->getContentSize().width + origin.x, pr2->getContentSize().height / 2 + origin.y + 50));
 		addChild(pr2, 1);
-		prop2 = "Prop_3";
+		prop2 = 3;
 		player2MenuItem->setScale(1.0f);
 	}
 	selectGateMenu->clearGate();  // 隐藏选道具菜单
@@ -385,11 +386,11 @@ void VersusModeScene::startCallback(Ref * pSender)
 void VersusModeScene::restartCallback(Ref * pSender)
 {
 	flag = 0;
-	player1 = NULL;
-	player2 = NULL;
-	prop1 = NULL;
-	prop2 = NULL;
-	background = NULL;
+	player1 = 0;
+	player2 = 0;
+	prop1 = 0;
+	prop2 =0 ;
+	background = 0;
 	pl1->removeFromParent();
 	pl2->removeFromParent();
 	pr1->removeFromParent();

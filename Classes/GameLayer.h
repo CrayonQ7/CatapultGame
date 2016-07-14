@@ -11,9 +11,9 @@ class GameLayer : public cocos2d::Layer
 public:
 	GameLayer();
 	~GameLayer();
-	static GameLayer* create(int pl1, int pl2, int bg);
+	static GameLayer* create(int pl1, int pr1, int pl2, int pr2, int bg);
 	/*CREATE_FUNC(GameLayer);*/
-	virtual bool init(int pl1, int pl2, int bg);
+	virtual bool init(int pl1, int pr1, int pl2, int pr2, int bg);
 	/*virtual bool init();*/
 	// 定义 Hero* 类型变量 hero1、hero2，并只声明了其 get 方法
 	CC_SYNTHESIZE_READONLY(Hero*, hero1, Hero1);
@@ -23,12 +23,21 @@ public:
 	void onHero1Walk(cocos2d::Point direction);
 	void onHero1Attack();
 	void onHero1Stop();
+	void onHero1UseProp();
 	void onHero2Walk(cocos2d::Point direction);
 	void onHero2Attack();
 	void onHero2Stop();
+	void onHero2UseProp();
 	void update(float dt);
 	void updateHero(float dt);
+	void uodateOnce1(float dt);
+	void uodateOnce2(float dt);
 	void onMove(Hero* hero);
+
+	void isCreatedP1();
+	void isCreatedP2();
+	//void prop2CallFunc(int d);
+	//void prop3CallFunc(int d);
 	//void updateEnemies(float dt);
 
 	//void addEnemy();
@@ -38,13 +47,17 @@ public:
 	float tileWidth;
 	float tileHeight;
 
-
 	float screenWidth;
 	float screenHeight;
 	cocos2d::Point origin;
 	cocos2d::Size visibleSize;
 	int p1;
 	int p2;
+
+	Sprite* prop1;
+	Sprite* prop2;
+	bool isCreated1;
+	bool isCreated2;
 	//cocos2d::Array *enemies;
 	//CREATE_FUNC(GameLayer);  // 自动生成一个不带参数的 create 静态方法，返回一个 GameLayer* 类型指针。自动调用了init和autorelease方法
 private:

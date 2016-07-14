@@ -14,10 +14,10 @@ Hero::~Hero()
 {
 }
 
-Hero * Hero::create(int p, Vec2 pos, int d)
+Hero * Hero::create(int pl, int pr, Vec2 pos, int d)
 {
 	Hero* pRet = new(std::nothrow) Hero();
-	if (pRet && pRet->init(p, pos, d))
+	if (pRet && pRet->init(pl, pr, pos, d))
 	{
 		pRet->autorelease();
 		return pRet;
@@ -30,12 +30,14 @@ Hero * Hero::create(int p, Vec2 pos, int d)
 	}
 }
 
-bool Hero::init(int p, Vec2 pos, int d)
+bool Hero::init(int pl, int pr, Vec2 pos, int d)
 {
 	bool ret = false;
 	playerPos = pos;
+	this->pl = pl;
+	this->pr = pr;
 	this->d = d;
-	switch (p)
+	switch (pl)
 	{
 	case 1:
 		/*CC_BREAK_IF(!this->initWithSpriteFrameName("Gate_1_Idle_0.png"));*/
@@ -59,7 +61,8 @@ bool Hero::init(int p, Vec2 pos, int d)
 	return ret;
 }
 
-// π/6  ~  π/3 
+// * ------------------------------------------ 调整炮口角度 -------------------------------------- *
+    // π/6  ~  π/3 
 void Hero::rotateArrow(float angle)
 {
 	//auto playerPos = this->getPosition();
@@ -85,7 +88,7 @@ void Hero::rotateArrow(float angle)
 
 }
 
-// 发射子弹
+// * ------------------------------------------ 发射子弹 -------------------------------------- *
 void Hero::shootArrow()
 {
 	//Sprite* arrow = Sprite::createWithSpriteFrameName("arrow1.png");
@@ -115,6 +118,7 @@ void Hero::shootArrow()
 
 }
 
+// * ------------------------------------------ 重载Attack -------------------------------------- *
 void Hero::runAttackAction()
 {
 	if (changeState(ACTION_STATE_ATTACK))
@@ -159,7 +163,6 @@ void Hero::loadGate_1()
 {
 	hp = 100;
 	atk = 5;
-	p = 1;
 	auto playerSize = Size(this->getContentSize().width / 2, this->getContentSize().height / 3 * 2);
 	this->setAnchorPoint(Vec2(0.7f, 0.4f));
 	this->setPosition(Vec2(playerPos.x /*+ GameManager::getInstance()->objectPosOffX*/, playerPos.y + playerSize.height * 0.4f));
@@ -228,7 +231,6 @@ void Hero::loadGate_2()
 {
 	hp = 100;
 	atk = 7;
-	p = 2;
 	auto playerSize = Size(this->getContentSize().width / 2, this->getContentSize().height / 3 * 2);
 	this->setAnchorPoint(Vec2(0.7f, 0.4f));
 	this->setPosition(Vec2(playerPos.x /*+ GameManager::getInstance()->objectPosOffX*/, playerPos.y + playerSize.height * 0.4f));
@@ -299,7 +301,6 @@ void Hero::loadGate_3()
 
 	hp = 100;
 	atk = 10;
-	p = 3;
 	auto playerSize = Size(this->getContentSize().width / 2, this->getContentSize().height / 3 * 2);
 	this->setAnchorPoint(Vec2(0.7f, 0.4f));
 	this->setPosition(Vec2(playerPos.x /*+ GameManager::getInstance()->objectPosOffX*/, playerPos.y + playerSize.height * 0.4f));
