@@ -1,6 +1,8 @@
 #ifndef __GameOverScene__H__
 #define __GameOverScene__H__
 #include <string>
+#include "cocos2d.h"
+
 USING_NS_CC;
 class GameOverScene : public cocos2d::Layer {
 public:

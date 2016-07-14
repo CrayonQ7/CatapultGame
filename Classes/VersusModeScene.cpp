@@ -47,13 +47,16 @@ bool VersusModeScene::init()
 	// * -----------------------±³¾°Í¼Æ¬---------------------------------- *
 	auto backGround = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("background.png"));
 	backGround->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+
+	auto scaleX = backGround->getTextureRect().getMaxX();
+	auto scaleY = backGround->getTextureRect().getMaxY();
+	backGround->setScaleX(visibleSize.width / scaleX);
+	backGround->setScaleY(visibleSize.height / scaleY);
+
 	this->addChild(backGround, 0);
 	
 	displayPlayer();
 
-	auto audio = SimpleAudioEngine::getInstance();
-	audio->preloadBackgroundMusic("music/BGM_1.mp3");
-	audio->playBackgroundMusic("music/gateMap.wav", true);
 	return true;
 }
 

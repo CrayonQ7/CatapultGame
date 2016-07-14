@@ -1,9 +1,10 @@
 #include "AppDelegate.h"
 #include "MenuScene.h"
+#include "ConfigScene.h"
 #include "SimpleAudioEngine.h"
 USING_NS_CC;
 using namespace CocosDenshion;
-static cocos2d::Size designResolutionSize = cocos2d::Size(480, 320);
+static cocos2d::Size designResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
@@ -51,7 +52,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setDisplayStats(false);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0f / 60);
 
     // Set the design resolution
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
@@ -81,7 +82,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->runWithScene(scene);
 	// * -----------------------Ô¤¼ÓÔØÒôÀÖ---------------------------------- *
 	auto audio = SimpleAudioEngine::getInstance();
-	audio->preloadBackgroundMusic("music/gateMap.wav");
+	for (int i = 1; i <= ConfigScene::musics; ++i) {
+		char file[20];
+		sprintf(file, "music/BGM_%d.mp3", i);
+		audio->preloadBackgroundMusic(file);
+	}
 	audio->preloadEffect("music/Gate_3_selected.mp3");
 	audio->preloadEffect("music/Gate_2_selected.mp3");
 	audio->preloadEffect("music/Gate_1_selected.mp3");

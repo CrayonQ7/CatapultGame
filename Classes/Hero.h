@@ -47,8 +47,6 @@ public:
 private:
 	ccQuadBezierConfig bezier;  // 贝塞尔曲线配置信息
 
-
-
 	Vec2 playerPos;  // 英雄位置
 	float rotateRadians;
 	int d;  // 代表哪个玩家操控
