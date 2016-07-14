@@ -25,7 +25,6 @@ public:
 	void runHurtAction();  // 受伤
 	void runDeadAction();  // 死亡
 
-	
 	// CC_SYNTHESIZE_RETAIN(cocos2d::CCObject*, m_weapon, Weapon);定义了一个 Object* 类型的变量 m_weapon ，并直接定义默认的 get/set 方法（后面一个参数 Weapon 是方法名）
 	// 即声明了一个 cocos2d::CCObject* getWeapon();和一个 void setWeapon(cocos2d::CCObject* value);
 	// 在 setWeapon 的时候，调用原有 m_weapon 的 release，并且调用新值的 retain。（当然，已经排除了意外情况，如相等或者NULL之类的）
@@ -45,8 +44,7 @@ public:
 
 	std::function<void(void)> pAttack; // 表示 void pAttack();
 
-
-									   // “立即返回空闲状态”回调函数
+    // “立即返回空闲状态”回调函数
 	cocos2d::CallFunc* createIdleCallbackFunc();
 protected:
 	// 根据图片路径，帧数，每秒显示的帧数来创建动画

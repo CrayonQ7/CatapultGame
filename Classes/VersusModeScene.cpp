@@ -47,12 +47,16 @@ bool VersusModeScene::init()
 	// * -----------------------±³¾°Í¼Æ¬---------------------------------- *
 	auto backGround = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("background.png"));
 	backGround->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+
+	auto scaleX = backGround->getTextureRect().getMaxX();
+	auto scaleY = backGround->getTextureRect().getMaxY();
+	backGround->setScaleX(visibleSize.width / scaleX);
+	backGround->setScaleY(visibleSize.height / scaleY);
+
 	this->addChild(backGround, 0);
 	
 	displayPlayer();
 
-	auto audio = SimpleAudioEngine::getInstance();
-	audio->playBackgroundMusic("music/gateMap.wav", true);
 	return true;
 }
 
@@ -202,7 +206,7 @@ void VersusModeScene::gateOneCallBack(Ref * pSender)
 	else if (flag == 2) {
 		if (player2 != NULL)
 			pl2->removeFromParent();
-		pl1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_1.png"));
+		pl2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_1.png"));
 		pl2->setPosition(Vec2(visibleSize.width - 20 - pl2->getContentSize().width + origin.x, pl2->getContentSize().height/2 + origin.y));
 		addChild(pl2, 1);
 		player2 = 1;

@@ -20,6 +20,10 @@ public:
 	SelectGate* selectGateMenu;
 
 	// *-----------------------需要向下传递的数据----------------------------------*
+	
+	    //用于保存设置数据（暂未使用）
+	float backgroundVolume, effectVolume;  // 背景音乐音量，音效音量
+	int curBgm;  //当前选择的背景音乐编号索引
 
 	    // 玩家选择的英雄、道具、地图路径
 	int player1;
@@ -32,7 +36,6 @@ public:
 	cocos2d::Sprite* pr2;
 	int background;
 	cocos2d::Sprite* bg;
-
 
 	// *-----------------------分割线----------------------------------*
 	    // 玩家图片
