@@ -1,5 +1,7 @@
 #include "OperateLayer.h"
+#include "SimpleAudioEngine.h"
 USING_NS_CC;
+using namespace CocosDenshion;
 
 OperateLayer::OperateLayer() :move1(Point(0,0)),move2(Point(0,0)), angle(0)
 {
@@ -26,6 +28,9 @@ bool OperateLayer::init()
 		keyboardListener->onKeyReleased = CC_CALLBACK_2(OperateLayer::onKeyReleased, this);
 		_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
+		auto audio = SimpleAudioEngine::getInstance();
+		audio->preloadEffect("music/Fire1.wav");
+		audio->preloadEffect("music/Fire3.wav");
 		scheduleUpdate();
 		ret = true;
 	} while (false);
@@ -233,13 +238,21 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 		keys[code] = false;
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_SPACE:
+
 		keys[code] = false;
+
+		SimpleAudioEngine::getInstance()->playEffect("music/Fire1.wav", false, 1.0f, 1.0f, 1.0f);
+
 		unschedule(schedule_selector(OperateLayer::updatePercent1, 0.1f));
 		hero1->pAttack();
 		hero1->setPower(0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_0:
+
 		keys[code] = false;
+
+		SimpleAudioEngine::getInstance()->playEffect("music/Fire3.wav", false, 1.0f, 1.0f, 1.0f);
+
 		unschedule(schedule_selector(OperateLayer::updatePercent2, 0.1f));
 		hero2->pAttack();
 		hero2->setPower(0);

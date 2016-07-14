@@ -381,6 +381,7 @@ void VersusModeScene::mapThreeCallback(Ref * pSender)
 void VersusModeScene::startCallback(Ref * pSender)
 {
 	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 	Director::getInstance()->replaceScene(GameScene::createScene(player1, prop1, player2, prop2, background));
 }
 

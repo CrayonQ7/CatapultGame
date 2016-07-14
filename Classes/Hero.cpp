@@ -38,17 +38,20 @@ bool Hero::init(int p, Vec2 pos, int d)
 	switch (p)
 	{
 	case 1:
-		CC_BREAK_IF(!this->initWithSpriteFrameName("Gate_1_Idle_0.png"));
+		/*CC_BREAK_IF(!this->initWithSpriteFrameName("Gate_1_Idle_0.png"));*/
+		CC_BREAK_IF(!this->initWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_1_Idle_0.png")));
 		ret = true;
 		loadGate_1();
 		break;
 	case 2:
-		CC_BREAK_IF(!this->initWithSpriteFrameName("Gate_2_Idle_0.png"));
+		//CC_BREAK_IF(!this->initWithSpriteFrameName("Gate_2_Idle_0.png"));
+		CC_BREAK_IF(!this->initWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_2_Idle_0.png")));
 		ret = true;
 		loadGate_2();
 		break;
 	case 3:
-		CC_BREAK_IF(!this->initWithSpriteFrameName("Gate_3_Idle_0.png"));
+		//CC_BREAK_IF(!this->initWithSpriteFrameName("Gate_3_Idle_0.png"));
+		CC_BREAK_IF(!this->initWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_3_Idle_0.png")));
 		ret = true;
 		loadGate_3();
 		break;
@@ -87,7 +90,8 @@ void Hero::shootArrow()
 {
 	//Sprite* arrow = Sprite::createWithSpriteFrameName("arrow1.png");
 	if (d == 1) {
-		auto arrow = Sprite::create("arrow.png");
+		//auto arrow = Sprite::create("arrow1.png");
+		auto arrow = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("arrow1.png"));
 		arrow->setRotation(playerarrow->getRotation());
 		arrow->setAnchorPoint(Vec2(0, 0));
 		this->getParent()->addChild(arrow, 1);
@@ -97,7 +101,8 @@ void Hero::shootArrow()
 		bullets.pushBack(arrow);
 	}
 	else if (d == 2) {
-		auto arrow = Sprite::create("arrow2.png");
+		/*auto arrow = Sprite::create("arrow2.png");*/
+		auto arrow = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("arrow2.png"));
 		arrow->setRotation(playerarrow->getRotation());
 		arrow->setAnchorPoint(Vec2(1, 0.5));
 		this->getParent()->addChild(arrow, 1);
@@ -154,7 +159,7 @@ void Hero::loadGate_1()
 {
 	hp = 100;
 	atk = 5;
-
+	p = 1;
 	auto playerSize = Size(this->getContentSize().width / 2, this->getContentSize().height / 3 * 2);
 	this->setAnchorPoint(Vec2(0.7f, 0.4f));
 	this->setPosition(Vec2(playerPos.x /*+ GameManager::getInstance()->objectPosOffX*/, playerPos.y + playerSize.height * 0.4f));
@@ -178,12 +183,13 @@ void Hero::loadGate_1()
 
 
 	if (d == 1) {
-		playerarrowBg = Sprite::create("paoBg.png");
+		/*playerarrowBg = Sprite::create("paoBg1.png");*/
+		playerarrowBg = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("paoBg1.png"));
 		playerarrowBg->setPosition(Vec2(playerarrowBg->getContentSize().width, playerarrowBg->getContentSize().height));
 		playerarrowBg->setAnchorPoint(Vec2(0.125f, 0.45f));
 		this->addChild(playerarrowBg, 2);
-
-		auto playerarrowSp = Sprite::create("pao.png");
+		/*auto playerarrowSp = Sprite::create("pao.png");*/
+		auto playerarrowSp = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("pao1.png"));
 		playerarrow = ProgressTimer::create(playerarrowSp);
 		playerarrow->setAnchorPoint(Vec2(0.125f, 0.45f));
 		playerarrow->setType(ProgressTimer::Type::BAR);
@@ -196,12 +202,14 @@ void Hero::loadGate_1()
 	}
 	else if (d == 2)
 	{
-		playerarrowBg = Sprite::create("paoBg2.png");
-		playerarrowBg->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		/*playerarrowBg = Sprite::create("paoBg2.png");*/
+		playerarrowBg = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("paoBg2.png"));
+		playerarrowBg->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		playerarrowBg->setAnchorPoint(Vec2(0.875f, 0.45f));
 		this->addChild(playerarrowBg, 2);
 
-		auto playerarrowSp = Sprite::create("pao2.png");
+		/*auto playerarrowSp = Sprite::create("pao2.png");*/
+		auto playerarrowSp = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("pao2.png"));
 		playerarrow = ProgressTimer::create(playerarrowSp);
 		playerarrow->setAnchorPoint(Vec2(0.875f, 0.45f));
 		playerarrow->setType(ProgressTimer::Type::BAR);
@@ -218,6 +226,7 @@ void Hero::loadGate_2()
 {
 	hp = 100;
 	atk = 7;
+	p = 2;
 	auto playerSize = Size(this->getContentSize().width / 2, this->getContentSize().height / 3 * 2);
 	this->setAnchorPoint(Vec2(0.7f, 0.4f));
 	this->setPosition(Vec2(playerPos.x /*+ GameManager::getInstance()->objectPosOffX*/, playerPos.y + playerSize.height * 0.4f));
@@ -238,12 +247,14 @@ void Hero::loadGate_2()
 	this->setDeadAction(Sequence::create(Animate::create(deadAnimation), Blink::create(3, 9), NULL));  // 死亡之后立马闪烁
 
 	if (d == 1) {
-		playerarrowBg = Sprite::create("paoBg.png");
+		/*playerarrowBg = Sprite::create("paoBg.png");*/
+		playerarrowBg = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("paoBg1.png"));
 		playerarrowBg->setPosition(Vec2(playerarrowBg->getContentSize().width, playerarrowBg->getContentSize().height));
 		playerarrowBg->setAnchorPoint(Vec2(0.125f, 0.45f));
 
 		this->addChild(playerarrowBg, 2);
-		auto playerarrowSp = Sprite::create("pao.png");
+		/*auto playerarrowSp = Sprite::create("pao.png");*/
+		auto playerarrowSp = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("pao1.png"));
 		playerarrow = ProgressTimer::create(playerarrowSp);
 		playerarrow->setAnchorPoint(Vec2(0.125f, 0.45f));
 		playerarrow->setType(ProgressTimer::Type::BAR);
@@ -256,12 +267,14 @@ void Hero::loadGate_2()
 	}
 	else if (d == 2)
 	{
-		playerarrowBg = Sprite::create("paoBg2.png");
-		playerarrowBg->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		/*playerarrowBg = Sprite::create("paoBg2.png");*/
+		playerarrowBg = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("paoBg2.png"));
+		playerarrowBg->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		playerarrowBg->setAnchorPoint(Vec2(0.875f, 0.45f));
 		this->addChild(playerarrowBg, 2);
 
-		auto playerarrowSp = Sprite::create("pao2.png");
+		/*auto playerarrowSp = Sprite::create("pao2.png");*/
+		auto playerarrowSp = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("pao2.png"));
 		playerarrow = ProgressTimer::create(playerarrowSp);
 		playerarrow->setAnchorPoint(Vec2(0.875f, 0.45f));
 		playerarrow->setType(ProgressTimer::Type::BAR);
@@ -279,7 +292,7 @@ void Hero::loadGate_3()
 
 	hp = 100;
 	atk = 10;
-
+	p = 3;
 	auto playerSize = Size(this->getContentSize().width / 2, this->getContentSize().height / 3 * 2);
 	this->setAnchorPoint(Vec2(0.7f, 0.4f));
 	this->setPosition(Vec2(playerPos.x /*+ GameManager::getInstance()->objectPosOffX*/, playerPos.y + playerSize.height * 0.4f));
@@ -302,12 +315,13 @@ void Hero::loadGate_3()
 
 
 	if (d == 1) {
-		playerarrowBg = Sprite::create("paoBg.png");
+		/*playerarrowBg = Sprite::create("paoBg.png");*/
+		playerarrowBg = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("paoBg1.png"));
 		playerarrowBg->setPosition(Vec2(playerarrowBg->getContentSize().width, playerarrowBg->getContentSize().height));
 		playerarrowBg->setAnchorPoint(Vec2(0.125f, 0.45f));
 		this->addChild(playerarrowBg, 2);
-
-		auto playerarrowSp = Sprite::create("pao.png");
+		/*auto playerarrowSp = Sprite::create("pao.png");*/
+		auto playerarrowSp = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("pao1.png"));
 		playerarrow = ProgressTimer::create(playerarrowSp);
 		playerarrow->setAnchorPoint(Vec2(0.125f, 0.45f));
 		playerarrow->setType(ProgressTimer::Type::BAR);
@@ -320,12 +334,14 @@ void Hero::loadGate_3()
 	}
 	else if (d == 2)
 	{
-		playerarrowBg = Sprite::create("paoBg2.png");
-		playerarrowBg->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		/*playerarrowBg = Sprite::create("paoBg2.png");*/
+		playerarrowBg = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("paoBg2.png"));
+		playerarrowBg->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		playerarrowBg->setAnchorPoint(Vec2(0.875f, 0.45f));
 		this->addChild(playerarrowBg, 2);
 
-		auto playerarrowSp = Sprite::create("pao2.png");
+		/*auto playerarrowSp = Sprite::create("pao2.png");*/
+		auto playerarrowSp = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("pao2.png"));
 		playerarrow = ProgressTimer::create(playerarrowSp);
 		playerarrow->setAnchorPoint(Vec2(0.875f, 0.45f));
 		playerarrow->setType(ProgressTimer::Type::BAR);
