@@ -83,7 +83,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->runWithScene(scene);
 	// * -----------------------Ô¤¼ÓÔØÒôÀÖ---------------------------------- *
 	auto audio = SimpleAudioEngine::getInstance();
-	/*audio->preloadBackgroundMusic("music/gateMap.wav");*/
+	/*audio->preloadBackgroundMusic("music/gateMap.mp3");*/
 	for (int i = 1; i <= ConfigScene::musics; ++i) {
 		char file[20];
 		sprintf(file, "music/BGM_%d.mp3", i);
@@ -93,8 +93,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	audio->preloadEffect("music/Gate_3_selected.mp3");
 	audio->preloadEffect("music/Gate_2_selected.mp3");
 	audio->preloadEffect("music/Gate_1_selected.mp3");
-	audio->preloadEffect("music/CGPage.wav");
-	audio->preloadEffect("music/button.wav");
+	audio->preloadEffect("music/Page.mp3");
+	audio->preloadEffect("music/button.mp3");
     return true;
 }
 

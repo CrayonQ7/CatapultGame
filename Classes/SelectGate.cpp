@@ -162,7 +162,7 @@ bool SelectGate::onTouchBegan(Touch* touch, Event* event) {
 }
 
 void SelectGate::onTouchEnded(Touch* touch, Event* event) {
-	SimpleAudioEngine::getInstance()->playEffect("music/Page.wav", false, 1.0f, 1.0f, 1.0f);
+	SimpleAudioEngine::getInstance()->playEffect("music/Page.mp3", false, 1.0f, 1.0f, 1.0f);
 	auto size = getContentSize();
 	auto xDelta = touch->getLocation().x - touch->getStartLocation().x;
 	rectify(xDelta>0);

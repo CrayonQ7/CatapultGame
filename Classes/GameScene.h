@@ -5,7 +5,7 @@
 class GameScene
 {
 public:
-	static cocos2d::Scene* createScene(int pl1, int pr1, int pl2, int pr2, int bg);  // 对战模式
+	static cocos2d::Scene* createScene(int pl1, int pr1, int pl2, int pr2, int bg, float bv, float ev, int bgm);  // 对战模式
 	static cocos2d::Scene* createScene(const char* pl, const char* pr, const char* bg);  // 冒险模式
 };
 

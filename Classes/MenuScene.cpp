@@ -76,7 +76,7 @@ void MenuScene::menuCallback(cocos2d::Ref * pSender)
 {
 	//播放点击音效
 	//SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
-	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 	//CCLOG("E:%f", SimpleAudioEngine::getInstance()->getEffectsVolume());
 
 	startMenuItem->setVisible(false);
@@ -102,7 +102,7 @@ void MenuScene::versusMenuCallback(cocos2d::Ref * pSender)
 {
 	// 播放点击音效
 	//SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
-	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 	auto myScene = VersusModeScene::createScene();
 
 	//auto curLayer = (VersusModeScene*)myScene->getChildren().at(1);
@@ -117,7 +117,7 @@ void MenuScene::adventureMenuCallback(cocos2d::Ref * pSender)
 {
 	// 播放点击音效
 	//SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
-	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 	auto myScene = AdventureModeScene::createScene();
 	Director::getInstance()->replaceScene(TransitionFade::create(0.5, myScene, Color3B(0, 255, 255)));
 }
@@ -158,7 +158,7 @@ void MenuScene::adventureMenuCallback(cocos2d::Ref * pSender)
 //{
 //		// 播放点击音效
 //    SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
-//	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+//	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 //	auto configScene = ConfigScene::createScene();
 //	auto curLayer = (ConfigScene*)configScene->getChildren().at(1);
 //	curLayer->backgroundVolume = backgroundVolume;
@@ -171,7 +171,7 @@ void MenuScene::adventureMenuCallback(cocos2d::Ref * pSender)
 //{
 //		// 播放点击音效
 //	SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
-//	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+//	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 //	if (backgroundVolume > 0 || effectVolume > 0) {
 //		backgroundVolume = effectVolume = 0;
 //		SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(backgroundVolume);

@@ -33,7 +33,7 @@ Scene* GameOverScene::scene(RenderTexture* sqr, int p, int d) {
 	//s->setPosition((origin.x + visibleSize.width) / 2, (origin.y + visibleSize.height) / 2 + 20);
 	//scene->addChild(s);
 	auto audio = SimpleAudioEngine::getInstance();
-	audio->preloadBackgroundMusic("music/WinMusic.wav");
+	audio->preloadBackgroundMusic("music/WinMusic.mp3");
 	audio->preloadEffect("music/Gate_2_Win.mp3");
 	Sprite* sp;
 	if (p == 1) {
@@ -70,7 +70,7 @@ bool GameOverScene::init() {
 		return false;
 	}
 	auto audio = SimpleAudioEngine::getInstance();
-	audio->playBackgroundMusic("music/WinMusic.wav", false);
+	audio->playBackgroundMusic("music/WinMusic.mp3", false);
 	audio->playEffect("music/Gate_2_Win.mp3", false, 1.0f, 1.0f, 1.0f);
 	//auto visibleSize = Director::getInstance()->getVisibleSize();
 	//auto origin = Director::getInstance()->getVisibleOrigin();

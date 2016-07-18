@@ -37,7 +37,8 @@ bool VersusModeScene::init()
 	prop1 = 0;
 	prop2 = 0;
 	background = 0;
-	backgroundVolume = effectVolume = 0.5f;
+	backgroundVolume = 0.5f;
+	effectVolume = 0.5f;
 	curBgm = 0;
 
 	selectGateMenu = SelectGate::create();
@@ -85,9 +86,19 @@ bool VersusModeScene::init()
 	displayPlayer();
 
 	// * -----------------------加载音效---------------------------------- *
-	auto audio = SimpleAudioEngine::getInstance();
-	audio->playBackgroundMusic("music/gateMap.wav", true);
+	//auto audio = SimpleAudioEngine::getInstance();
 	return true;
+}
+
+void VersusModeScene::onEnter() 
+{
+	Layer::onEnter();
+	auto audio = SimpleAudioEngine::getInstance();
+	char file[20];
+	sprintf(file, "music/BGM_%d.mp3", curBgm + 1);
+	audio->playBackgroundMusic(file, true);
+	audio->setEffectsVolume(effectVolume);
+	audio->setBackgroundMusicVolume(backgroundVolume);
 }
 
 
@@ -203,7 +214,7 @@ void VersusModeScene::displayButton()
 // * -----------------------------------------------------点击玩家-------------------------------------------------------- *
 void VersusModeScene::player1Callback(Ref * pSender)
 {
-	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 	if (flag != 0) return;  // 如果当前正在选人，就不能再点击玩家了
 	flag = 1;
 	player1MenuItem->setScale(1.5f);
@@ -212,7 +223,7 @@ void VersusModeScene::player1Callback(Ref * pSender)
 
 void VersusModeScene::player2Callback(Ref * pSender)
 {
-	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 	if (flag != 0) return;
 	flag = 2;
 	player2MenuItem->setScale(1.5f);
@@ -412,9 +423,10 @@ void VersusModeScene::startCallback(Ref * pSender)
 {
 	// 播放点击音效
 	SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
-	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 	SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-	Director::getInstance()->replaceScene(GameScene::createScene(player1, prop1, player2, prop2, background));
+	auto gameScene = GameScene::createScene(player1, prop1, player2, prop2, background, backgroundVolume, effectVolume, curBgm);
+	Director::getInstance()->replaceScene(gameScene);
 }
 
 void VersusModeScene::restartCallback(Ref * pSender)
@@ -438,7 +450,7 @@ void VersusModeScene::configMenuCallback(cocos2d::Ref * pSender)
 {
 	// 播放点击音效
 	SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
-	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 	// 将当前界面的音量传入设置界面
 	auto configScene = ConfigScene::createScene();
 	auto curLayer = (ConfigScene*)configScene->getChildren().at(1);
@@ -454,11 +466,13 @@ void VersusModeScene::soundCallback(cocos2d::Ref * pSender)
 {
 	// 播放点击音效
 	SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
-	SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 	if (backgroundVolume > 0 || effectVolume > 0) {
+		CCLOG("B:%f", SimpleAudioEngine::getInstance()->getBackgroundMusicVolume());
 		backgroundVolume = effectVolume = 0;
 		SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(backgroundVolume);
 		SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
+		CCLOG("B:%f", SimpleAudioEngine::getInstance()->getBackgroundMusicVolume());
 		}
 	else if (backgroundVolume == 0 && effectVolume == 0) {
 		backgroundVolume = effectVolume = 0.5f;
