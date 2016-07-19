@@ -29,8 +29,8 @@ bool OperateLayer::init()
 		_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
 		auto audio = SimpleAudioEngine::getInstance();
-		audio->preloadEffect("music/Fire1.wav");
-		audio->preloadEffect("music/Fire3.wav");
+		audio->preloadEffect("music/Fire1.mp3");
+		audio->preloadEffect("music/Fire3.mp3");
 		scheduleUpdate();
 		ret = true;
 	} while (false);
@@ -271,7 +271,7 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 
 		keys[code] = false;
 
-		SimpleAudioEngine::getInstance()->playEffect("music/Fire1.wav", false, 1.0f, 1.0f, 1.0f);
+		SimpleAudioEngine::getInstance()->playEffect("music/Fire1.mp3", false, 1.0f, 1.0f, 1.0f);
 
 		unschedule(schedule_selector(OperateLayer::updatePercent1, 0.1f));
 		hero1->pAttack();
@@ -281,7 +281,7 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 
 		keys[code] = false;
 
-		SimpleAudioEngine::getInstance()->playEffect("music/Fire3.wav", false, 1.0f, 1.0f, 1.0f);
+		SimpleAudioEngine::getInstance()->playEffect("music/Fire3.mp3", false, 1.0f, 1.0f, 1.0f);
 
 		unschedule(schedule_selector(OperateLayer::updatePercent2, 0.1f));
 		hero2->pAttack();

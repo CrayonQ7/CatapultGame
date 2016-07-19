@@ -79,7 +79,7 @@ bool ConfigScene::init() {
 	{
 		// ²¥·Åµã»÷ÒôÐ§
 		SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
-		SimpleAudioEngine::getInstance()->playEffect("music/button.wav", false, 1.0f, 1.0f, 1.0f);
+		SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 	});
 	testItem->setPosition(origin.x+visibleSize.width-testItem->getContentSize().width*5.5, effectControlLabel->getPositionY());
 	// ±³¾°Í¼Æ¬

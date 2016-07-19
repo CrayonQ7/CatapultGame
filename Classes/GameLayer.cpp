@@ -12,10 +12,10 @@ GameLayer::~GameLayer()
 {
 }
 
-GameLayer * GameLayer::create(int pl1, int pr1, int pl2, int pr2, int bg)
+GameLayer * GameLayer::create(int pl1, int pr1, int pl2, int pr2, int bg, float bv, float ev, int bgm)
 {
 	GameLayer* pRet = new(std::nothrow) GameLayer();
-	if (pRet && pRet->init(pl1, pr1, pl2, pr2, bg))
+	if (pRet && pRet->init(pl1, pr1, pl2, pr2, bg, bv, ev, bgm))
 	{
 		pRet->autorelease();
 		return pRet;
@@ -29,7 +29,7 @@ GameLayer * GameLayer::create(int pl1, int pr1, int pl2, int pr2, int bg)
 }
 
 
-bool GameLayer::init(int pl1, int pr1, int pl2, int pr2, int bg)
+bool GameLayer::init(int pl1, int pr1, int pl2, int pr2, int bg, float bv, float ev, int bgm)
 {
 	if (!Layer::init()) return false;
 	this->visibleSize = Director::getInstance()->getVisibleSize();
@@ -84,12 +84,19 @@ bool GameLayer::init(int pl1, int pr1, int pl2, int pr2, int bg)
 	hero2->pWalk = CC_CALLBACK_1(GameLayer::onHero2Walk, this);
 	hero2->pUseProp = CC_CALLBACK_0(GameLayer::onHero2UseProp, this);
 
+	backgroundVolume = bv;
+	effectVolume = ev;
+	curBgm = bgm;
 	auto audio = SimpleAudioEngine::getInstance();
-	audio->playBackgroundMusic("music/BGM_1.mp3", true);
-	audio->preloadEffect("music/Fire1.wav");
-	audio->preloadEffect("music/Fire2.wav");
-	audio->preloadEffect("music/Fire3.wav");
-	audio->preloadEffect("music/Explode.wav");
+	char file[20];
+	sprintf(file, "music/BGM_%d.mp3", curBgm + 1);
+	audio->playBackgroundMusic(file, true);
+	audio->setBackgroundMusicVolume(backgroundVolume);
+	audio->preloadEffect("music/Fire1.mp3");
+	audio->preloadEffect("music/Fire2.mp3");
+	audio->preloadEffect("music/Fire3.mp3");
+	audio->preloadEffect("music/Explode.mp3");
+	audio->setEffectsVolume(effectVolume);
 
 	this->scheduleUpdate();
 	return true;
@@ -214,7 +221,7 @@ void GameLayer::update(float dt)
 			{
 				(*it)->removeFromParentAndCleanup(true);
 				hero2->runHurtAction();
-				SimpleAudioEngine::getInstance()->playEffect("music/Explode.wav", false, 1.0f, 1.0f, 1.0f);
+				SimpleAudioEngine::getInstance()->playEffect("music/Explode.mp3", false, 1.0f, 1.0f, 1.0f);
 				auto ex = ParticleSystemQuad::create("plist/explode.plist");
 				ex->setPosition((*it)->getPosition());
 				ex->setAutoRemoveOnFinish(true);
@@ -262,7 +269,7 @@ void GameLayer::update(float dt)
 			{
 				(*itr)->removeFromParentAndCleanup(true);
 				hero1->runHurtAction();
-				SimpleAudioEngine::getInstance()->playEffect("music/Explode.wav", false, 1.0f, 1.0f, 1.0f);
+				SimpleAudioEngine::getInstance()->playEffect("music/Explode.mp3", false, 1.0f, 1.0f, 1.0f);
 				auto ex = ParticleSystemQuad::create("plist/explode.plist");
 				ex->setPosition((*itr)->getPosition());
 				ex->setAutoRemoveOnFinish(true);

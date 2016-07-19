@@ -11,9 +11,9 @@ class GameLayer : public cocos2d::Layer
 public:
 	GameLayer();
 	~GameLayer();
-	static GameLayer* create(int pl1, int pr1, int pl2, int pr2, int bg);
+	static GameLayer* create(int pl1, int pr1, int pl2, int pr2, int bg , float bv, float ev, int bgm);
 	/*CREATE_FUNC(GameLayer);*/
-	virtual bool init(int pl1, int pr1, int pl2, int pr2, int bg);
+	virtual bool init(int pl1, int pr1, int pl2, int pr2, int bg, float bv, float ev, int bgm);
 	/*virtual bool init();*/
 	// 定义 Hero* 类型变量 hero1、hero2，并只声明了其 get 方法
 	CC_SYNTHESIZE_READONLY(Hero*, hero1, Hero1);
@@ -60,6 +60,9 @@ public:
 	bool isCreated2;
 	//cocos2d::Array *enemies;
 	//CREATE_FUNC(GameLayer);  // 自动生成一个不带参数的 create 静态方法，返回一个 GameLayer* 类型指针。自动调用了init和autorelease方法
+
+	float backgroundVolume, effectVolume;  // 背景音乐音量，音效音量
+	int curBgm;  //当前选择的背景音乐编号索引
 private:
 	cocos2d::TMXTiledMap* tmx;
 };
