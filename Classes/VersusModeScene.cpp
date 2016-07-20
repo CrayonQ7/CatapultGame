@@ -94,9 +94,9 @@ void VersusModeScene::onEnter()
 {
 	Layer::onEnter();
 	auto audio = SimpleAudioEngine::getInstance();
-	char file[20];
-	sprintf(file, "music/BGM_%d.mp3", curBgm + 1);
-	audio->playBackgroundMusic(file, true);
+	//char file[20];
+	//sprintf(file, "music/BGM_%d.mp3", curBgm + 1);
+	audio->playBackgroundMusic("music/gateMap.mp3", true);
 	audio->setEffectsVolume(effectVolume);
 	audio->setBackgroundMusicVolume(backgroundVolume);
 }

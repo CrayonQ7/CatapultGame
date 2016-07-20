@@ -32,11 +32,6 @@ bool ConfigScene::init() {
 
 	// ·µ»Ø°´Å¥
 	auto backItem = MenuItemImage::create("icons/BackNormal.png", "icons/BackSelected.png", CC_CALLBACK_1(ConfigScene::sceneBackCallback, this));
-
-	//backItem->setTitleText("Back");
-	//backItem->setTitleFontSize(30);
-	//backItem->setTitleFontName("fonts/Marker Felt.ttf");
-	/*backItem->addTouchEventListener(CC_CALLBACK_1(ConfigScene::sceneBackCallback, this));*/
 	backItem->setPosition(Vec2(origin.x + visibleSize.width/2,
 		origin.y + visibleSize.height/3+20));
 

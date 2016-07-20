@@ -299,7 +299,7 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 
 void OperateLayer::update(float f)
 {
-	hero1->pWalk(move1);
+    hero1->pWalk(move1);
 	hero2->pWalk(move2);
 }
 

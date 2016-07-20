@@ -163,10 +163,10 @@ void Hero::loadGate_1()
 {
 	hp = 100;
 	atk = 5;
-	auto playerSize = Size(this->getContentSize().width / 2, this->getContentSize().height / 3 * 2);
-	this->setAnchorPoint(Vec2(0.7f, 0.4f));
-	this->setPosition(Vec2(playerPos.x /*+ GameManager::getInstance()->objectPosOffX*/, playerPos.y + playerSize.height * 0.4f));
-
+	//auto playerSize = Size(this->getContentSize().width / 2, this->getContentSize().height / 3 * 2);
+	//this->setAnchorPoint(Vec2(0.7f, 0.4f));
+	//this->setPosition(Vec2(playerPos.x /*+ GameManager::getInstance()->objectPosOffX*/, playerPos.y + playerSize.height * 0.4f));
+	this->setPosition(Vec2(playerPos));
 	auto idleAnimation = this->createAnimation("Gate_1_Idle_%d.png", 2, 4);  // 空闲动画只有两帧  每秒4帧
 	this->setIdleAction(RepeatForever::create(Animate::create(idleAnimation)));
 
@@ -222,7 +222,7 @@ void Hero::loadGate_1()
 		playerarrow->setPercentage(0);
 
 		//playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
-		playerarrow->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		this->addChild(playerarrow, 3);
 		//playerarrowBg->setVisible(false);
 	}
@@ -233,9 +233,10 @@ void Hero::loadGate_2()
 {
 	hp = 100;
 	atk = 7;
-	auto playerSize = Size(this->getContentSize().width / 2, this->getContentSize().height / 3 * 2);
-	this->setAnchorPoint(Vec2(0.7f, 0.4f));
-	this->setPosition(Vec2(playerPos.x /*+ GameManager::getInstance()->objectPosOffX*/, playerPos.y + playerSize.height * 0.4f));
+	//auto playerSize = Size(this->getContentSize().width / 2, this->getContentSize().height / 3 * 2);
+	//this->setAnchorPoint(Vec2(0.7f, 0.4f));
+	//this->setPosition(Vec2(playerPos.x /*+ GameManager::getInstance()->objectPosOffX*/, playerPos.y + playerSize.height * 0.4f));
+	this->setPosition(Vec2(playerPos));
 
 	auto idleAnimation = this->createAnimation("Gate_2_Idle_%d.png", 2, 4);  // 空闲动画只有两帧  每秒4帧
 	this->setIdleAction(RepeatForever::create(Animate::create(idleAnimation)));
@@ -294,7 +295,7 @@ void Hero::loadGate_2()
 		playerarrow->setPercentage(0);
 
 		//playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
-		playerarrow->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		this->addChild(playerarrow, 3);
 		//playerarrowBg->setVisible(false);
 	}
@@ -305,10 +306,10 @@ void Hero::loadGate_3()
 
 	hp = 100;
 	atk = 10;
-	auto playerSize = Size(this->getContentSize().width / 2, this->getContentSize().height / 3 * 2);
-	this->setAnchorPoint(Vec2(0.7f, 0.4f));
-	this->setPosition(Vec2(playerPos.x /*+ GameManager::getInstance()->objectPosOffX*/, playerPos.y + playerSize.height * 0.4f));
-
+	//auto playerSize = Size(this->getContentSize().width / 2, this->getContentSize().height / 3 * 2);
+	//this->setAnchorPoint(Vec2(0.7f, 0.4f));
+	//this->setPosition(Vec2(playerPos.x /*+ GameManager::getInstance()->objectPosOffX*/, playerPos.y + playerSize.height * 0.4f));
+	this->setPosition(Vec2(playerPos));
 	auto idleAnimation = this->createAnimation("Gate_3_Idle_%d.png", 2, 4);  // 空闲动画只有两帧  每秒4帧
 	this->setIdleAction(RepeatForever::create(Animate::create(idleAnimation)));
 
@@ -363,7 +364,7 @@ void Hero::loadGate_3()
 		playerarrow->setPercentage(0);
 
 		//playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
-		playerarrow->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		this->addChild(playerarrow, 3);
 		//playerarrowBg->setVisible(false);
 	}

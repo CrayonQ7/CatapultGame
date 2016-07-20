@@ -12,9 +12,7 @@ public:
 	GameLayer();
 	~GameLayer();
 	static GameLayer* create(int pl1, int pr1, int pl2, int pr2, int bg , float bv, float ev, int bgm);
-	/*CREATE_FUNC(GameLayer);*/
 	virtual bool init(int pl1, int pr1, int pl2, int pr2, int bg, float bv, float ev, int bgm);
-	/*virtual bool init();*/
 	// 定义 Hero* 类型变量 hero1、hero2，并只声明了其 get 方法
 	CC_SYNTHESIZE_READONLY(Hero*, hero1, Hero1);
 	CC_SYNTHESIZE_READONLY(Hero*, hero2, Hero2);
@@ -28,20 +26,18 @@ public:
 	void onHero2Attack();
 	void onHero2Stop();
 	void onHero2UseProp();
+	void onMove(Hero* hero);
+
+	// 调度器
 	void update(float dt);
 	void updateHero(float dt);
 	void uodateOnce1(float dt);
 	void uodateOnce2(float dt);
-	void onMove(Hero* hero);
+	void updateOnce(float dt);
+	
 
 	void isCreatedP1();
 	void isCreatedP2();
-	//void prop2CallFunc(int d);
-	//void prop3CallFunc(int d);
-	//void updateEnemies(float dt);
-
-	//void addEnemy();
-	//void onEnemyAttack(BaseSprite *pSprite);
 
 	// 表示每个瓦片的宽高，用来控制英雄的行走区域
 	float tileWidth;
@@ -54,15 +50,26 @@ public:
 	int p1;
 	int p2;
 
+	ParticleFire* fire;
+	ParticleFire* fire2;
+	Sprite* shield;
+	Sprite* shield2;
+	Sprite* sludge;
+	Sprite* sludge2;
 	Sprite* prop1;
 	Sprite* prop2;
 	bool isCreated1;
 	bool isCreated2;
-	//cocos2d::Array *enemies;
+	bool hasShield1;
+	bool hasShield2;
+	bool hasSludge1;
+	bool hasSludge2;
 	//CREATE_FUNC(GameLayer);  // 自动生成一个不带参数的 create 静态方法，返回一个 GameLayer* 类型指针。自动调用了init和autorelease方法
 
 	float backgroundVolume, effectVolume;  // 背景音乐音量，音效音量
 	int curBgm;  //当前选择的背景音乐编号索引
+
+	void gameRuleCallback(Ref* pSender);
 private:
 	cocos2d::TMXTiledMap* tmx;
 };
