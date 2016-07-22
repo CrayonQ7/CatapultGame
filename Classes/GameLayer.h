@@ -31,8 +31,8 @@ public:
 	// µ÷¶ÈÆ÷
 	void update(float dt);
 	void updateHero(float dt);
-	void uodateOnce1(float dt);
-	void uodateOnce2(float dt);
+	void updateOnce1(float dt);
+	void updateOnce2(float dt);
 	void updateOnce(float dt);
 	
 
@@ -49,6 +49,8 @@ public:
 	cocos2d::Size visibleSize;
 	int p1;
 	int p2;
+
+	MenuItemFont* gameRuleItem;
 
 	ParticleFire* fire;
 	ParticleFire* fire2;

@@ -2,6 +2,7 @@
 #include "SimpleAudioEngine.h"
 #include "GameOverScene.h"
 #include "GameRuleLayer.h"
+#include "PauseMenu.h"
 USING_NS_CC;
 using namespace CocosDenshion;
 GameLayer::GameLayer() : tmx(NULL)
@@ -103,11 +104,12 @@ bool GameLayer::init(int pl1, int pr1, int pl2, int pr2, int bg, float bv, float
 	audio->preloadEffect("music/Explode.mp3");
 	audio->setEffectsVolume(effectVolume);
 
-	auto gameRuleItem = MenuItemFont::create("Game Rule", CC_CALLBACK_1(GameLayer::gameRuleCallback, this));
+	/*gameRuleItem = MenuItemFont::create("Game Rule", CC_CALLBACK_1(GameLayer::gameRuleCallback, this));
 	gameRuleItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - gameRuleItem->getContentSize().height / 2));
+	gameRuleItem->setEnabled(false);
 	auto menu = Menu::create(gameRuleItem, NULL);
 	menu->setPosition(Vec2::ZERO);
-	addChild(menu, 1);
+	addChild(menu, 1);*/
 
 	this->scheduleUpdate();
 	this->scheduleOnce(schedule_selector(GameLayer::updateOnce), 1.0f);
@@ -194,10 +196,10 @@ void GameLayer::isCreatedP1()
 		break;
 	}
 	isCreated1 = true;
-	schedule(schedule_selector(GameLayer::uodateOnce1), 1.0, 2, 0);
+	schedule(schedule_selector(GameLayer::updateOnce1), 1.0, 2, 0);
 }
 
-void GameLayer::uodateOnce1(float dt)
+void GameLayer::updateOnce1(float dt)
 {
 	static int count = 0;
 	count += dt;
@@ -305,10 +307,10 @@ void GameLayer::isCreatedP2()
 		break;
 	}
 	isCreated2 = true;
-	schedule(schedule_selector(GameLayer::uodateOnce2), 1.0, 2, 0);
+	schedule(schedule_selector(GameLayer::updateOnce2), 1.0, 2, 0);
 }
 
-void GameLayer::uodateOnce2(float dt)
+void GameLayer::updateOnce2(float dt)
 {
 	static int count2 = 0;
 	count2 += dt;
@@ -480,6 +482,7 @@ void GameLayer::updateOnce(float dt)
 	renderTexture->end();
 
 	Director::getInstance()->pushScene(GameRuleLayer::createScene(renderTexture, true));
+	//gameRuleItem->setEnabled(true);
 }
 
 void GameLayer::onMove(Hero * hero)
@@ -513,7 +516,7 @@ void GameLayer::onMove(Hero * hero)
 
 void GameLayer::gameRuleCallback(Ref * pSender)
 {
-	RenderTexture* renderTexture = RenderTexture::create(origin.x + visibleSize.width, origin.y + visibleSize.height);
+	auto renderTexture = RenderTexture::create(origin.x + visibleSize.width, origin.y + visibleSize.height);
 	renderTexture->begin();
 	this->getParent()->visit();
 	renderTexture->end();

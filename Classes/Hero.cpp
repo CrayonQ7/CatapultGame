@@ -208,7 +208,7 @@ void Hero::loadGate_1()
 	{
 		/*playerarrowBg = Sprite::create("paoBg2.png");*/
 		playerarrowBg = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("paoBg2.png"));
-		playerarrowBg->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		playerarrowBg->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		playerarrowBg->setAnchorPoint(Vec2(0.875f, 0.45f));
 		this->addChild(playerarrowBg, 2);
 
@@ -222,7 +222,7 @@ void Hero::loadGate_1()
 		playerarrow->setPercentage(0);
 
 		//playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
-		playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		playerarrow->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		this->addChild(playerarrow, 3);
 		//playerarrowBg->setVisible(false);
 	}
@@ -281,7 +281,7 @@ void Hero::loadGate_2()
 	{
 		/*playerarrowBg = Sprite::create("paoBg2.png");*/
 		playerarrowBg = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("paoBg2.png"));
-		playerarrowBg->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		playerarrowBg->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		playerarrowBg->setAnchorPoint(Vec2(0.875f, 0.45f));
 		this->addChild(playerarrowBg, 2);
 
@@ -295,7 +295,7 @@ void Hero::loadGate_2()
 		playerarrow->setPercentage(0);
 
 		//playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
-		playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		playerarrow->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		this->addChild(playerarrow, 3);
 		//playerarrowBg->setVisible(false);
 	}
@@ -350,7 +350,7 @@ void Hero::loadGate_3()
 	{
 		/*playerarrowBg = Sprite::create("paoBg2.png");*/
 		playerarrowBg = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("paoBg2.png"));
-		playerarrowBg->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		playerarrowBg->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		playerarrowBg->setAnchorPoint(Vec2(0.875f, 0.45f));
 		this->addChild(playerarrowBg, 2);
 
@@ -364,7 +364,7 @@ void Hero::loadGate_3()
 		playerarrow->setPercentage(0);
 
 		//playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
-		playerarrow->setPosition(Vec2(-playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
+		playerarrow->setPosition(Vec2(playerarrowBg->getContentSize().width / 4, playerarrowBg->getContentSize().height));
 		this->addChild(playerarrow, 3);
 		//playerarrowBg->setVisible(false);
 	}

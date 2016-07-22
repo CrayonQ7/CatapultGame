@@ -1,4 +1,6 @@
 #include "GameOverScene.h"
+#include "MenuScene.h"
+#include "VersusModeScene.h"
 #include "SimpleAudioEngine.h"
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -82,6 +84,23 @@ bool GameOverScene::init() {
 	//menu->setPosition(Vec2::ZERO);
 	//this->addChild(menu, 2);
 
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto origin = Director::getInstance()->getVisibleOrigin();
+
+	auto backItem = MenuItemFont::create("Back To Menu", CC_CALLBACK_1(GameOverScene::menuBackCallBack, this));
+	backItem->setScale(1.5f);
+	backItem->setPosition(Vec2(origin.x + backItem->getContentSize().width / 1.25f,
+		origin.y + backItem->getContentSize().height / 2));
+
+	auto restartItem = MenuItemFont::create("Restart", CC_CALLBACK_1(GameOverScene::menuRestartCallBack, this));
+	restartItem->setScale(1.5f);
+	restartItem->setPosition(Vec2(origin.x + visibleSize.width - backItem->getContentSize().width / 2,
+		origin.y + backItem->getContentSize().height / 2));
+
+	auto menu = Menu::create(backItem, restartItem, NULL);
+	menu->setPosition(Vec2::ZERO);
+	this->addChild(menu, 2);
+
 	return true;
 }
 
@@ -89,3 +108,17 @@ bool GameOverScene::init() {
 //	Director::getInstance()->replaceScene(Breakout::createScene());
 //	//Director::sharedDirector()->replaceScene(Breakout::createScene());
 //}
+
+void GameOverScene::menuRestartCallBack(cocos2d::Ref* pSender)
+{
+	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
+	auto mainScene = VersusModeScene::createScene();
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, mainScene, Color3B(0, 0, 0)));
+}
+
+void GameOverScene::menuBackCallBack(cocos2d::Ref* pSender)
+{
+	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
+	auto mainScene = MenuScene::createScene();
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, mainScene, Color3B(0, 0, 0)));
+}

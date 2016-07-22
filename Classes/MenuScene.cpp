@@ -110,7 +110,7 @@ void MenuScene::versusMenuCallback(cocos2d::Ref * pSender)
 	//curLayer->effectVolume = effectVolume;
 	//curLayer->curBgm = curBgm;
 
-	Director::getInstance()->replaceScene(TransitionFade::create(0.5, myScene, Color3B(0, 0, 0)));
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene, Color3B(0, 0, 0)));
 }
 
 void MenuScene::adventureMenuCallback(cocos2d::Ref * pSender)
@@ -119,7 +119,7 @@ void MenuScene::adventureMenuCallback(cocos2d::Ref * pSender)
 	//SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
 	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 	auto myScene = AdventureModeScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(0.5, myScene, Color3B(0, 255, 255)));
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5f, myScene, Color3B(0, 255, 255)));
 }
 
 //void MenuScene::onEnter()

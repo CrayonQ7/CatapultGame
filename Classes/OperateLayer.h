@@ -9,10 +9,11 @@ class OperateLayer : public cocos2d::Layer
 public:
 	OperateLayer();
 	~OperateLayer();
-	virtual bool init();
 	CC_SYNTHESIZE(Hero*, hero1, Hero1);
 	CC_SYNTHESIZE(Hero*, hero2, Hero2);
-	CREATE_FUNC(OperateLayer);
+	static OperateLayer* create(int bgm);
+	virtual bool init(int bgm);
+	//CREATE_FUNC(OperateLayer);
 	void updatePercent1(float f);
 	void updatePercent2(float f);
 	void updateAngle(float f);
@@ -24,6 +25,13 @@ public:
 	void onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event * event);
 
 	void update(float f);
+
+	void popPauseMenu();
+
+	//背景音乐音量，音效音量
+	float backgroundVolume, effectVolume;
+	//选定的背景音乐编号索引
+	static int curBgm;
 private:
 	cocos2d::Point move1;  // 角色移动距离
 	cocos2d::Point move2;  // 角色移动距离

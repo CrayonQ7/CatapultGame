@@ -24,8 +24,8 @@ public:
 	// *-----------------------需要向下传递的数据----------------------------------*
 
 	    //用于保存设置数据（暂未使用）
-	float backgroundVolume, effectVolume;  // 背景音乐音量，音效音量
-	int curBgm;  //当前选择的背景音乐编号索引
+	static float backgroundVolume, effectVolume;  // 背景音乐音量，音效音量
+	static int curBgm;  //当前选择的背景音乐编号索引
 
 	cocos2d::MenuItemSprite* configItem;  // 设置界面进入按钮
 	cocos2d::Menu* soundState;

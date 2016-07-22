@@ -1,5 +1,5 @@
-#ifndef __CONFIG_SCENE_H__
-#define __CONFIG_SCENE_H__
+#ifndef __PAUSE_MENU_H__
+#define __PAUSE_MENU_H__
 
 #include <vector>
 #include "cocos2d.h"
@@ -7,7 +7,7 @@
 using namespace cocos2d;
 using namespace ui;
 
-class ConfigScene : public Layer {
+class PauseMenu : public Layer {
 public:
 	static Scene* createScene(RenderTexture* sqr);
 
@@ -28,7 +28,6 @@ public:
 
 	virtual bool init();
 	virtual void onEnter();
-	virtual void onEnterTransitionDidFinish();
 
 	//背景音乐音量，音效音量
 	float backgroundVolume, effectVolume;
@@ -40,15 +39,16 @@ public:
 
 	//回调函数
 	void sceneBackCallback(Ref* pSender);
+	void sceneExitCallback(Ref* pSender);
+	void sceneHelpCallback(Ref* pSender);
+
 	void m_leftSelectCallback(Ref* pSender);
 	void m_rightSelectCallback(Ref* pSender);
 	void backgroundVolumeSliderEvent(Ref* pSender, Slider::EventType type);
 	void effectVolumeSliderEvent(Ref* pSender, Slider::EventType type);
 
 	// implement the "static create()" method manually
-	CREATE_FUNC(ConfigScene);
+	CREATE_FUNC(PauseMenu);
 };
 
-#endif // __CONFIG_SCENE_H__
-
-
+#endif // __PAUSE_MENU_H__
