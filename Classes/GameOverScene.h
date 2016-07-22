@@ -9,7 +9,9 @@ public:
 	static cocos2d::Scene* scene(RenderTexture* sqr, int p, int d);
 	CREATE_FUNC(GameOverScene);
 	// 重新开始游戏
-	//void menuRestart(Object* pSender);
+	void menuRestartCallBack(cocos2d::Ref* pSender);
+	// 回到主菜单
+	void menuBackCallBack(cocos2d::Ref* pSender);
 private:
 };
 

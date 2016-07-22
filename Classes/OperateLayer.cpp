@@ -1,7 +1,11 @@
 #include "OperateLayer.h"
+#include "PauseMenu.h"
+#include "GameLayer.h"
 #include "SimpleAudioEngine.h"
 USING_NS_CC;
 using namespace CocosDenshion;
+
+int OperateLayer::curBgm = 0;
 
 OperateLayer::OperateLayer() :move1(Point(0,0)),move2(Point(0,0)), angle(0)
 {
@@ -11,7 +15,23 @@ OperateLayer::~OperateLayer()
 {
 }
 
-bool OperateLayer::init()
+OperateLayer * OperateLayer::create(int bgm)
+{
+	OperateLayer* pRet = new(std::nothrow) OperateLayer();
+	if (pRet && pRet->init(bgm))
+	{
+		pRet->autorelease();
+		return pRet;
+	}
+	else
+	{
+		delete pRet;
+		pRet = NULL;
+		return NULL;
+	}
+}
+
+bool OperateLayer::init(int bgm)
 {
 	bool ret = false;
 	do {
@@ -34,6 +54,7 @@ bool OperateLayer::init()
 		scheduleUpdate();
 		ret = true;
 	} while (false);
+	curBgm = bgm;
 	return ret;
 }
 
@@ -190,66 +211,58 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 	case cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_RIGHT_ARROW]) move2 = Point(5, 0);
-		else {
-			move2 = Point(0, 0);
-			/*hero2->pStop();*/
-		}
+		else if (keys[EventKeyboard::KeyCode::KEY_UP_ARROW]) move2 = Point(0, 5);
+		else if (keys[EventKeyboard::KeyCode::KEY_DOWN_ARROW]) move2 = Point(0, -5);
+		else move2 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_A:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_D]) move1 = Point(5, 0);
-		else {
-			move1 = Point(0, 0);
-			/*hero1->pStop();*/
-		}
+		else if (keys[EventKeyboard::KeyCode::KEY_W]) move1 = Point(0, 5);
+		else if (keys[EventKeyboard::KeyCode::KEY_S]) move1 = Point(0, -5);
+		else move1 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_LEFT_ARROW]) move2 = Point(-5, 0);
-		else {
-			move2 = Point(0, 0);
-			/*hero2->pStop();*/
-		}
+		else if (keys[EventKeyboard::KeyCode::KEY_UP_ARROW]) move2 = Point(0, 5);
+		else if (keys[EventKeyboard::KeyCode::KEY_DOWN_ARROW]) move2 = Point(0, -5);
+		else move2 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_D:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_A]) move1 = Point(-5, 0);
-		else {
-			move1 = Point(0, 0);
-			/*hero1->pStop();*/
-		}
+		else if (keys[EventKeyboard::KeyCode::KEY_W]) move1 = Point(0, 5);
+		else if (keys[EventKeyboard::KeyCode::KEY_S]) move1 = Point(0, -5);
+		else move1 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_DOWN_ARROW]) move2 = Point(0, -5);
-		else {
-			move2 = Point(0, 0);
-			/*hero2->pStop();*/
-		}
+		else if (keys[EventKeyboard::KeyCode::KEY_LEFT_ARROW]) move2 = Point(-5, 0);
+		else if (keys[EventKeyboard::KeyCode::KEY_RIGHT_ARROW]) move2 = Point(5, 0);
+		else move2 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_W:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_S]) move1 = Point(0, -5);
-		else {
-			move1 = Point(0, 0);
-			/*hero1->pStop();*/
-		}
+		else if (keys[EventKeyboard::KeyCode::KEY_A]) move1 = Point(-5, 0);
+		else if (keys[EventKeyboard::KeyCode::KEY_D]) move1 = Point(5, 0);
+		else move1 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_UP_ARROW]) move2 = Point(0, 5);
-		else {
-			move2 = Point(0, 0);
-			/*hero2->pStop();*/
-		}
+		else if (keys[EventKeyboard::KeyCode::KEY_LEFT_ARROW]) move2 = Point(-5, 0);
+		else if (keys[EventKeyboard::KeyCode::KEY_RIGHT_ARROW]) move2 = Point(5, 0);
+		else move2 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_S:
 		keys[code] = false;
 		if (keys[EventKeyboard::KeyCode::KEY_W]) move1 = Point(0, 5);
-		else {
-			move1 = Point(0, 0);
-			/*hero1->pStop();*/
-		}
+		else if (keys[EventKeyboard::KeyCode::KEY_A]) move1 = Point(-5, 0);
+		else if (keys[EventKeyboard::KeyCode::KEY_D]) move1 = Point(5, 0);
+		else move1 = Point(0, 0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_J:
 		keys[code] = false;
@@ -291,6 +304,9 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_5:
 		break;
+	case cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE:
+		popPauseMenu();
+		break;
 	default:
 		keys[code] = false;
 		break;
@@ -302,5 +318,25 @@ void OperateLayer::update(float f)
     hero1->pWalk(move1);
 	hero2->pWalk(move2);
 }
+
+void OperateLayer::popPauseMenu()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto origin = Director::getInstance()->getVisibleOrigin();
+	auto renderTexture = RenderTexture::create(origin.x + visibleSize.width, origin.y + visibleSize.height);
+	renderTexture->begin();
+	this->getParent()->visit();
+	renderTexture->end();
+	auto pauseMenu = PauseMenu::createScene(renderTexture);
+	auto curLayer = (PauseMenu*)pauseMenu->getChildren().at(2);
+	// 将设置后的结果传回选人界面
+	curLayer->backgroundVolume = SimpleAudioEngine::getInstance()->getBackgroundMusicVolume();
+	curLayer->effectVolume = SimpleAudioEngine::getInstance()->getEffectsVolume();
+	curLayer->curBgm = curBgm;
+	//auto curLayer = (PauseMenu*)pauseMenu->getChildren().at(1);
+	//curLayer->spr = Sprite::createWithTexture(renderTexture->getSprite()->getTexture());
+	Director::getInstance()->pushScene(pauseMenu);
+}
+
 
 
