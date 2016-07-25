@@ -1,12 +1,10 @@
 #include "OperateLayer.h"
+#include "SimpleAudioEngine.h"
 #include "PauseMenu.h"
 #include "GameLayer.h"
-#include "SimpleAudioEngine.h"
 USING_NS_CC;
 using namespace CocosDenshion;
-
 int OperateLayer::curBgm = 0;
-
 OperateLayer::OperateLayer() :move1(Point(0,0)),move2(Point(0,0)), angle(0)
 {
 }
@@ -28,8 +26,8 @@ OperateLayer * OperateLayer::create(int bgm)
 		delete pRet;
 		pRet = NULL;
 		return NULL;
+		}
 	}
-}
 
 bool OperateLayer::init(int bgm)
 {
@@ -193,10 +191,14 @@ void OperateLayer::onKeyPressed(cocos2d::EventKeyboard::KeyCode code, cocos2d::E
 		schedule(schedule_selector(OperateLayer::updatePercent2, 0.1f));
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_I:
-		hero1->pUseProp();
+		if (hero1->mpBar->getPercentage() > 0 && hero1->canUseProp)
+			hero1->pUseProp();
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_5:
-		hero2->pUseProp();
+		if (hero2->mpBar->getPercentage() > 0 && hero2->canUseProp)
+			hero2->pUseProp();
+		break;
+	case cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE:
 		break;
 	default:
 		keys[code] = true;
@@ -304,7 +306,8 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_5:
 		break;
-	case cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE:
+	//case cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE:
+	case cocos2d::EventKeyboard::KeyCode::KEY_P:
 		popPauseMenu();
 		break;
 	default:
@@ -329,14 +332,13 @@ void OperateLayer::popPauseMenu()
 	renderTexture->end();
 	auto pauseMenu = PauseMenu::createScene(renderTexture);
 	auto curLayer = (PauseMenu*)pauseMenu->getChildren().at(2);
-	// 将设置后的结果传回选人界面
+		// 将设置后的结果传回选人界面
 	curLayer->backgroundVolume = SimpleAudioEngine::getInstance()->getBackgroundMusicVolume();
 	curLayer->effectVolume = SimpleAudioEngine::getInstance()->getEffectsVolume();
 	curLayer->curBgm = curBgm;
 	//auto curLayer = (PauseMenu*)pauseMenu->getChildren().at(1);
 	//curLayer->spr = Sprite::createWithTexture(renderTexture->getSprite()->getTexture());
 	Director::getInstance()->pushScene(pauseMenu);
-}
-
+	}
 
 

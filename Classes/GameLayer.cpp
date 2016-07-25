@@ -52,7 +52,7 @@ bool GameLayer::init(int pl1, int pr1, int pl2, int pr2, int bg, float bv, float
 	hero1->runIdleAction();
 	hero1->setZOrder(screenHeight - hero1->getPositionY());
 	addChild(hero1);
-	hero1->createHpBar(pl1);
+	hero1->createHpBar(pl1, pr1);
 	// 右边的英雄
 	hero2 = Hero::create(pl2, pr2, Vec2(origin.x + visibleSize.width - 100, origin.y + 100), 2);
 	//hero2->playerarrow->setRotation(-M_PI/2);
@@ -60,7 +60,7 @@ bool GameLayer::init(int pl1, int pr1, int pl2, int pr2, int bg, float bv, float
 	hero2->runIdleAction();
 	hero2->setZOrder(screenHeight - hero2->getPositionY());
 	addChild(hero2);
-	hero2->createHpBar(pl2);
+	hero2->createHpBar(pl2, pr2);
 	// * ---------------------------------背景图片---------------------------- *
 	switch (bg)
 	{
@@ -104,12 +104,11 @@ bool GameLayer::init(int pl1, int pr1, int pl2, int pr2, int bg, float bv, float
 	audio->preloadEffect("music/Explode.mp3");
 	audio->setEffectsVolume(effectVolume);
 
-	/*gameRuleItem = MenuItemFont::create("Game Rule", CC_CALLBACK_1(GameLayer::gameRuleCallback, this));
-	gameRuleItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - gameRuleItem->getContentSize().height / 2));
-	gameRuleItem->setEnabled(false);
-	auto menu = Menu::create(gameRuleItem, NULL);
-	menu->setPosition(Vec2::ZERO);
-	addChild(menu, 1);*/
+	//auto gameRuleItem = MenuItemFont::create("Game Rule", CC_CALLBACK_1(GameLayer::gameRuleCallback, this));
+	//gameRuleItem->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - gameRuleItem->getContentSize().height / 2));
+	//auto menu = Menu::create(gameRuleItem, NULL);
+	//menu->setPosition(Vec2::ZERO);
+	//addChild(menu, 1);
 
 	this->scheduleUpdate();
 	this->scheduleOnce(schedule_selector(GameLayer::updateOnce), 1.0f);
@@ -139,82 +138,61 @@ void GameLayer::onHero1Stop()
 
 void GameLayer::onHero1UseProp()
 {
-	auto funcall = CallFunc::create(CC_CALLBACK_0(GameLayer::isCreatedP1, this));
-	switch (hero1->pr)
-	{
-	case 1:  // 移到hero2的位置
-		prop1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_1.png"));
-		prop1->setPosition(hero2->getPosition().x, origin.y + visibleSize.height - prop1->getContentSize().height / 2);
-		addChild(prop1, hero2->getZOrder() + 1);
-		prop1->runAction(Sequence::create(MoveTo::create(0.5, hero2->getPosition()), funcall, NULL));
-		break;
-	case 2:  // 移到hero1的位置
-		prop1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_2.png"));
-		prop1->setPosition(hero1->getPosition().x, origin.y + visibleSize.height - prop1->getContentSize().height / 2);
-		addChild(prop1, hero1->getZOrder() + 1);
-		prop1->runAction(Sequence::create(MoveTo::create(0.5, hero1->getPosition()), funcall, NULL));
-		break;
-	case 3:  // 移到hero2的位置
-		prop1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_3.png"));
-		prop1->setPosition(hero2->getPosition().x, origin.y + visibleSize.height - prop1->getContentSize().height / 2);
-		addChild(prop1, hero2->getZOrder() + 1);
-		prop1->runAction(Sequence::create(MoveTo::create(0.5, hero2->getPosition()), funcall, NULL));
-		break;
-	default:
-		break;
-	}
-}
-
-// 产生特效，以及删除原道具图片
-void GameLayer::isCreatedP1()
-{
-	prop1->removeFromParent();
+	// 道具进入冷却
+	hero1->cdBar->setPercentage(0.0f);
+	schedule(schedule_selector(GameLayer::updateCD1), 1.0, 9, 0);
 	switch (hero1->pr)
 	{
 	case 1:  // 在hero2脚下产生泥潭
-		sludge = Sprite::create("sludge.png");
-		sludge->setPosition(Vec2(hero2->getPositionX(), hero2->getPositionY() - hero2->getContentSize().height / 2+10));
-		this->addChild(sludge, hero2->getZOrder()-1);
+		sludge1 = Sprite::create("sludge.png");
+		sludge1->setPosition(Vec2(hero2->getPositionX(), hero2->getPositionY() - hero2->getContentSize().height / 2 + 10));
+		this->addChild(sludge1, hero2->getZOrder() - 1);
 		hasSludge1 = true;
 		break;
 	case 2:  // 在hero1面前产生护盾
-			shield = Sprite::create("shield.png");
-			shield->setFlippedX(true);
-			shield->setPosition(hero1->getPositionX() + 30, hero1->getPositionY());
-			this->addChild(shield, hero1->getZOrder() + 1);
-			hasShield1 = true;
+		shield1 = Sprite::create("shield.png");
+		shield1->setFlippedX(true);
+		shield1->setPosition(hero1->getPositionX() + 30, hero1->getPositionY());
+		this->addChild(shield1, hero1->getZOrder() + 1);
+		hasShield1 = true;
 		break;
 	case 3:  // 在hero2身上灼烧
-		fire = ParticleFire::create();
-		fire->setTexture(TextureCache::getInstance()->addImage("fire3.jpg"));
-		fire->setPosition(hero2->getPosition());
-		this->addChild(fire, hero2->getZOrder() + 1);
-		fire->setDuration(2);
-		fire->setScale(0.5f);
+		fire1 = ParticleFire::create();
+		fire1->setTexture(TextureCache::getInstance()->addImage("fire3.jpg"));
+		fire1->setPosition(hero2->getPosition());
+		this->addChild(fire1, hero2->getZOrder() + 1);
+		fire1->setDuration(2);
+		fire1->setScale(0.5f);
 		break;
 	default:
 		break;
 	}
-	isCreated1 = true;
+	isCreated1 = true;  // 为了在调度器里，控制道具使得道具特效一直在英雄身上
+	hero1->canUseProp = false;  // CD
+	// 使用道具耗蓝
+	auto percent = hero1->mpBar->getPercentage() - 20;
+    if (percent < 0) percent = 0;
+	hero1->mpBar->setPercentage(percent);
+	// 让道具拥有持续效果
 	schedule(schedule_selector(GameLayer::updateOnce1), 1.0, 2, 0);
 }
 
 void GameLayer::updateOnce1(float dt)
 {
-	static int count = 0;
-	count += dt;
-	if (count == 3) {
+	static int count1 = 0;
+	count1 += dt;
+	if (count1 == 3) {
 		isCreated1 = false;
-		count = 0;
+		count1 = 0;
 		if (hero1->pr == 1) {
-			sludge->removeFromParent();
+			sludge1->removeFromParent();
 			hasSludge1 = false;
 		}
 		else if (hero1->pr == 2) {
-			shield->removeFromParent();
+			shield1->removeFromParent();
 			hasShield1 = false;
 		}
-		else if (hero1->pr == 3) fire->removeFromParent();
+		else if (hero1->pr == 3) fire1->removeFromParent();
 	}
 
 	if (hero1->pr == 3) { // 灼烧
@@ -251,35 +229,9 @@ void GameLayer::onHero2Stop()
 
 void GameLayer::onHero2UseProp()
 {
-	auto funcall = CallFunc::create(CC_CALLBACK_0(GameLayer::isCreatedP2, this));
-	switch (hero2->pr)
-	{
-	case 1:  // 移到hero1的位置
-		prop2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_1.png"));
-		prop2->setPosition(hero1->getPosition().x, origin.y + visibleSize.height - prop2->getContentSize().height / 2);
-		addChild(prop2, hero1->getZOrder() + 1);
-		prop2->runAction(Sequence::create(MoveTo::create(0.5, hero1->getPosition()), funcall, NULL));
-		break;
-	case 2:  // 移到hero2的位置
-		prop2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_2.png"));
-		prop2->setPosition(hero2->getPosition().x, origin.y + visibleSize.height - prop2->getContentSize().height / 2);
-		addChild(prop2, hero2->getZOrder() + 1);
-		prop2->runAction(Sequence::create(MoveTo::create(0.5, hero2->getPosition()), funcall, NULL));
-		break;
-	case 3:  // 移到hero1的位置
-		prop2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("prop_3.png"));
-		prop2->setPosition(hero1->getPosition().x, origin.y + visibleSize.height - prop2->getContentSize().height / 2);
-		addChild(prop2, hero1->getZOrder() + 1);
-		prop2->runAction(Sequence::create(MoveTo::create(0.5, hero1->getPosition()), funcall, NULL));
-		break;
-	default:
-		break;
-	}
-}
-
-void GameLayer::isCreatedP2()
-{
-	prop2->removeFromParent();
+	// 道具进入冷却
+	hero2->cdBar->setPercentage(0.0f);
+	schedule(schedule_selector(GameLayer::updateCD2), 1.0, 9, 0);
 	switch (hero2->pr)
 	{
 	case 1:  // 在hero1脚下产生泥潭
@@ -307,6 +259,10 @@ void GameLayer::isCreatedP2()
 		break;
 	}
 	isCreated2 = true;
+	hero2->canUseProp = false;
+	auto percent = hero2->mpBar->getPercentage() - 20;
+	if (percent < 0) percent = 0;
+	hero2->mpBar->setPercentage(percent);
 	schedule(schedule_selector(GameLayer::updateOnce2), 1.0, 2, 0);
 }
 
@@ -358,11 +314,13 @@ void GameLayer::update(float dt)
 				ex->setDuration(0.1);
 				ex->setScale(0.3f);
 				addChild(ex, 5);
+				// 如果没有护盾，就掉血
 				if (!hasShield2) {
 					hero2->runHurtAction();
 					hero2->setHP(hero2->getHP() - hero1->getATK());
 					if (hero2->getHP() < 0) {
 						hero2->setHP(0);
+						// 游戏胜利
 						RenderTexture* renderTexture = RenderTexture::create(origin.x + visibleSize.width, origin.y + visibleSize.height);
 						renderTexture->begin();
 						this->getParent()->visit();
@@ -372,8 +330,6 @@ void GameLayer::update(float dt)
 						unschedule(schedule_selector(GameLayer::update));
 						Director::getInstance()->pushScene(GameOverScene::scene(renderTexture, hero1->pl, 1));
 					}// 其实是gameover
-					//ProgressTo *progressTo = ProgressTo::create(1, hero2->getHP());
-					//hero2->hpBar->runAction(RepeatForever::create(progressTo));
 					hero2->hpBar->setPercentage(hero2->getHP());
 				}
 				it = hero1->bullets.erase(it);
@@ -447,8 +403,8 @@ void GameLayer::update(float dt)
 	}
 	if (isCreated1)
 	{
-		if (hero1->pr == 2) shield->setPosition(hero1->getPositionX() + 20, hero1->getPositionY());
-		else if (hero1->pr == 3) fire->setPosition(hero2->getPosition());
+		if (hero1->pr == 2) shield1->setPosition(hero1->getPositionX() + 20, hero1->getPositionY());
+		else if (hero1->pr == 3) fire1->setPosition(hero2->getPosition());
 	}
 	if (isCreated2)
 	{
@@ -471,20 +427,6 @@ void GameLayer::updateHero(float dt)
 	onMove(hero1);
 	onMove(hero2);
 }
-
-
-// 刚进入游戏界面，自动弹出游戏操作说明界面
-void GameLayer::updateOnce(float dt)
-{
-	RenderTexture* renderTexture = RenderTexture::create(origin.x + visibleSize.width, origin.y + visibleSize.height);
-	renderTexture->begin();
-	this->getParent()->visit();
-	renderTexture->end();
-
-	Director::getInstance()->pushScene(GameRuleLayer::createScene(renderTexture, true));
-	//gameRuleItem->setEnabled(true);
-}
-
 void GameLayer::onMove(Hero * hero)
 {
 	if (hero->getCurrActionState() == ACTION_STATE_WALK)
@@ -493,7 +435,7 @@ void GameLayer::onMove(Hero * hero)
 		auto expectP = hero->getPosition() + hero->getVelocity();  // 预测下一个移动到的位置
 		auto actualP = expectP;  // 实际将要移动到的位置
 								 // 确保不会移出地图或在墙上，其中tilemap只有15格是可以走人的
-		if (expectP.y < halfHeroFrameHeight || expectP.y >(tileHeight * 12 + halfHeroFrameHeight))
+		if (expectP.y < halfHeroFrameHeight*2 || expectP.y >(tileHeight * 12 + halfHeroFrameHeight))
 		{
 			actualP.y = hero->getPositionY();
 		}
@@ -512,6 +454,43 @@ void GameLayer::onMove(Hero * hero)
 		hero->setZOrder(screenHeight - hero->getPositionY());
 	}
 }
+// 刚进入游戏界面，自动弹出游戏操作说明界面
+void GameLayer::updateOnce(float dt)
+{
+	RenderTexture* renderTexture = RenderTexture::create(origin.x + visibleSize.width, origin.y + visibleSize.height);
+	renderTexture->begin();
+	this->getParent()->visit();
+	renderTexture->end();
+
+	Director::getInstance()->pushScene(GameRuleLayer::createScene(renderTexture, true));
+}
+
+// 道具进入CD
+void GameLayer::updateCD1(float dt)
+{
+	static float countCD1 = 0;
+	countCD1 += dt;
+	if (countCD1 == 10) {
+		hero1->canUseProp = true;
+		countCD1 = 0;
+	}
+	ProgressTo *progressTo = ProgressTo::create(0.99f, hero1->cdBar->getPercentage() + 10);
+	hero1->cdBar->runAction(progressTo);
+}
+
+void GameLayer::updateCD2(float dt)
+{
+	static float countCD2 = 0;
+	countCD2 += dt;
+	if (countCD2 == 10) {
+		hero2->canUseProp = true;
+		countCD2 = 0;
+	}
+	ProgressTo *progressTo = ProgressTo::create(0.99f, hero2->cdBar->getPercentage() + 10);
+	hero2->cdBar->runAction(progressTo);
+}
+
+
 
 
 void GameLayer::gameRuleCallback(Ref * pSender)

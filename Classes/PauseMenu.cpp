@@ -52,7 +52,7 @@ bool PauseMenu::init()
 	// 暂停界面标题
 	auto label = Label::createWithTTF("Config", "fonts/Marker Felt.ttf", 40);
 	label->setColor(Color3B::BLACK);
-	label->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - label->getContentSize().height * 3.75f));
+	label->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height/2 + label->getContentSize().height * 5));
 	this->addChild(label, 1);
 
 	// 选择背景音乐
@@ -114,10 +114,8 @@ bool PauseMenu::init()
 	// 显示背景音乐
 	musicLabel = Label::createWithTTF(loadbgm[curBgm], "fonts/1.ttf", 32);
 	musicLabel->setColor(Color3B::BLACK);
-	musicLabel->setPosition(Vec2(origin.x + visibleSize.width / 2 + musicLabel->getContentSize().width / 2,
-		origin.y + visibleSize.height / 2 + musicLabel->getContentSize().height * 3.75f));
+	musicLabel->setPosition(Vec2(origin.x + visibleSize.width / 2, musicSelectLabel->getPositionY()));
 	this->addChild(musicLabel, 1);
-
 	// 音效音量滑动条
 	eSlider = Slider::create();
 	eSlider->loadBarTexture("icons/SliderTrack.png");

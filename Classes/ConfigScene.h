@@ -10,7 +10,6 @@ using namespace ui;
 class ConfigScene : public Layer {
 public:
 	static Scene* createScene(RenderTexture* sqr);
-
 	Size visibleSize;
 	Vec2 origin;
 

@@ -32,8 +32,8 @@ public:
 	bool isRunAttackAction;
 	
 	void setPower(float p);
-	void createHpBar(int p);
-
+	void createHpBar(int p, int pr);
+	void createWeapon(int p);
 
 
 	cocos2d::Vector<Sprite*> bullets;  // 这个英雄发射的子弹
@@ -42,6 +42,12 @@ public:
 
 	ProgressTimer* hpBar;  // 血条
 	Sprite* hpBgSprite;
+	ProgressTimer* mpBar;  // 蓝条
+	Sprite* mpBgSprite;
+	ProgressTimer* cdBar;  // CD条
+	Sprite* cdBgSprite;
+
+	bool canUseProp;
 
 	/*   在 BaseSprite.h 中还有这三种属性
 	CC_SYNTHESIZE(cocos2d::Point, velocity, Velocity);  // 速度属性

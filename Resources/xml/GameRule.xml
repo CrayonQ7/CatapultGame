@@ -2,13 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>description1</key>
-	<string>WASD控制人物移动
+<key>description1</key>
+<string>WASD控制人物移动
 JK控制武器发射的角度
-按下space蓄力，松开发射</string>
+按下space蓄力，松开发射
+I使用道具，p暂停</string>
 <key>description2</key>
 <string>↑↓←→控制人物移动
 89控制武器发射的角度
-按下0蓄力，松开发射</string>
+按下0蓄力，松开发射
+5使用道具，p暂停</string>
 </dict>
 </plist>

@@ -81,6 +81,7 @@ bool VersusModeScene::init()
 	soundStateToggle = MenuItemToggle::createWithCallback(CC_CALLBACK_1(VersusModeScene::soundCallback, this), soundOn, soundOff, NULL);
 	soundStateToggle->setPosition(Vec2(origin.x + soundStateToggle->getContentSize().width,
 		origin.y + visibleSize.height - soundStateToggle->getContentSize().height));
+	//if (backgroundVolume <= 0.01 && effectVolume <= 0.01) soundStateToggle->setSelectedIndex(1);
 	soundState = Menu::create(soundStateToggle, NULL);
 	soundState->setPosition(Vec2::ZERO);
 	addChild(soundState, 1);
@@ -259,7 +260,6 @@ void VersusModeScene::gateOneCallBack(Ref * pSender)
 	}
 	selectGateMenu->clearGate();
 	displayPropGate();  // 显示选道具菜单
-
 }
 
 void VersusModeScene::gateTwoCallBack(Ref * pSender)
@@ -458,16 +458,14 @@ void VersusModeScene::configMenuCallback(cocos2d::Ref * pSender)
 	SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
 	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 
-	/*auto renderTexture = RenderTexture::create(origin.x + visibleSize.width, origin.y + visibleSize.height);
-	renderTexture->begin();
-	this->getParent()->visit();
-	renderTexture->end();*/
 	auto renderTexture = RenderTexture::create(origin.x + visibleSize.width, origin.y + visibleSize.height);
 	renderTexture->begin();
 	this->getParent()->visit();
 	renderTexture->end();
 	auto configScene = ConfigScene::createScene(renderTexture);
 	// 将当前界面的音量传入设置界面
+	//auto configScene = ConfigScene::createScene();
+	//auto curLayer = (ConfigScene*)configScene->getChildren().at(1);
 	auto curLayer = (ConfigScene*)configScene->getChildren().at(2);
 	curLayer->backgroundVolume = backgroundVolume;
 	curLayer->effectVolume = effectVolume;
@@ -483,9 +481,11 @@ void VersusModeScene::soundCallback(cocos2d::Ref * pSender)
 	SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
 	SimpleAudioEngine::getInstance()->playEffect("music/button.mp3", false, 1.0f, 1.0f, 1.0f);
 	if (backgroundVolume > 0 || effectVolume > 0) {
+		
 		backgroundVolume = effectVolume = 0;
 		SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(backgroundVolume);
 		SimpleAudioEngine::getInstance()->setEffectsVolume(effectVolume);
+		
 		}
 	else if (backgroundVolume == 0 && effectVolume == 0) {
 		backgroundVolume = effectVolume = 0.5f;

@@ -34,10 +34,12 @@ public:
 	void updateOnce1(float dt);
 	void updateOnce2(float dt);
 	void updateOnce(float dt);
+	void updateCD1(float dt);
+	void updateCD2(float dt);
 	
 
-	void isCreatedP1();
-	void isCreatedP2();
+	//void isCreatedP1();
+	//void isCreatedP2();
 
 	// 表示每个瓦片的宽高，用来控制英雄的行走区域
 	float tileWidth;
@@ -50,13 +52,11 @@ public:
 	int p1;
 	int p2;
 
-	MenuItemFont* gameRuleItem;
-
-	ParticleFire* fire;
+	ParticleFire* fire1;
 	ParticleFire* fire2;
-	Sprite* shield;
+	Sprite* shield1;
 	Sprite* shield2;
-	Sprite* sludge;
+	Sprite* sludge1;
 	Sprite* sludge2;
 	Sprite* prop1;
 	Sprite* prop2;
