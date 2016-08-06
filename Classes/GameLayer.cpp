@@ -46,7 +46,7 @@ bool GameLayer::init(int pl1, int pr1, int pl2, int pr2, int bg, float bv, float
 	hasSludge2 = false;
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("plist/GameLayer.plist");
 	// 左边的英雄
-	hero1 = Hero::create(pl1, pr1, Vec2(origin + Point(100, 100)), 1);
+	hero1 = Hero::create(pl1, pr1, Vec2(origin + Point(100, 200)), 1);
 	hero1->setFlippedX(false);
 	//hero1->setPosition(origin + Point(100, 100));
 	hero1->runIdleAction();
@@ -54,7 +54,7 @@ bool GameLayer::init(int pl1, int pr1, int pl2, int pr2, int bg, float bv, float
 	addChild(hero1);
 	hero1->createHpBar(pl1, pr1);
 	// 右边的英雄
-	hero2 = Hero::create(pl2, pr2, Vec2(origin.x + visibleSize.width - 100, origin.y + 100), 2);
+	hero2 = Hero::create(pl2, pr2, Vec2(origin.x + visibleSize.width - 100, origin.y + 200), 2);
 	//hero2->playerarrow->setRotation(-M_PI/2);
 	//hero2->setPosition(origin.x + visibleSize.width - 100, origin.y + 100);
 	hero2->runIdleAction();
@@ -144,13 +144,13 @@ void GameLayer::onHero1UseProp()
 	switch (hero1->pr)
 	{
 	case 1:  // 在hero2脚下产生泥潭
-		sludge1 = Sprite::create("sludge.png");
+		sludge1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("sludge.png"));
 		sludge1->setPosition(Vec2(hero2->getPositionX(), hero2->getPositionY() - hero2->getContentSize().height / 2 + 10));
 		this->addChild(sludge1, hero2->getZOrder() - 1);
 		hasSludge1 = true;
 		break;
 	case 2:  // 在hero1面前产生护盾
-		shield1 = Sprite::create("shield.png");
+		shield1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("shield.png"));
 		shield1->setFlippedX(true);
 		shield1->setPosition(hero1->getPositionX() + 30, hero1->getPositionY());
 		this->addChild(shield1, hero1->getZOrder() + 1);
@@ -235,13 +235,13 @@ void GameLayer::onHero2UseProp()
 	switch (hero2->pr)
 	{
 	case 1:  // 在hero1脚下产生泥潭
-		sludge2 = Sprite::create("sludge.png");
+		sludge2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("sludge.png"));
 		sludge2->setPosition(Vec2(hero1->getPositionX(), hero1->getPositionY() - hero1->getContentSize().height / 2 + 10));
 		this->addChild(sludge2, hero1->getZOrder() - 1);
 		hasSludge2 = true;
 		break;
 	case 2:  // 在hero2面前产生护盾
-		shield2 = Sprite::create("shield.png");
+		shield2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("shield.png"));
 		//shield2->setFlippedX(true);
 		shield2->setPosition(hero2->getPositionX() - 30, hero2->getPositionY());
 		this->addChild(shield2, hero2->getZOrder() + 1);

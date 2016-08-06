@@ -86,26 +86,28 @@ bool PauseMenu::init()
 	testItem->setPosition(Vec2(origin.x + +background->getAnchorPoint().x + background->getContentSize().width -
 		testItem->getContentSize().width / 2, effectControlLabel->getPositionY()));
 
-	// 返回游戏按钮
-	auto backItem = MenuItemFont::create("Resume", CC_CALLBACK_1(PauseMenu::sceneBackCallback, this));
-	backItem->setColor(Color3B::BLACK);
-	backItem->setScale(1.5f);
-	backItem->setPosition(Vec2(origin.x + background->getAnchorPoint().x + backItem->getContentSize().width * 2,
-		origin.y + background->getAnchorPoint().y + backItem->getContentSize().height * 5));
-
-	// 返回主菜单按钮
-	auto exitItem = MenuItemFont::create("Back to Menu", CC_CALLBACK_1(PauseMenu::sceneExitCallback, this));
-	exitItem->setColor(Color3B::BLACK);
-	exitItem->setScale(1.5f);
-	exitItem->setPosition(Vec2(origin.x + background->getAnchorPoint().x + background->getContentSize().width +
-		exitItem->getContentSize().width / 2.5f, origin.y + background->getAnchorPoint().y + exitItem->getContentSize().height * 5));
-
 	// 打开帮助界面按钮
 	auto helpItem = MenuItemFont::create("Help", CC_CALLBACK_1(PauseMenu::sceneHelpCallback, this));
 	helpItem->setColor(Color3B::BLACK);
 	helpItem->setScale(1.5f);
 	helpItem->setPosition(Vec2(origin.x + background->getAnchorPoint().x + helpItem->getContentSize().width * 3,
-		origin.y + background->getAnchorPoint().y + helpItem->getContentSize().height * 7));
+		effectControlLabel->getPositionY() - helpItem->getContentSize().height * 2));
+
+	// 返回游戏按钮
+	auto backItem = MenuItemFont::create("Resume", CC_CALLBACK_1(PauseMenu::sceneBackCallback, this));
+	backItem->setColor(Color3B::BLACK);
+	backItem->setScale(1.5f);
+	backItem->setPosition(Vec2(origin.x + backItem->getContentSize().width * 2,
+		helpItem->getPositionY() - backItem->getContentSize().height * 2));
+
+	// 返回主菜单按钮
+	auto exitItem = MenuItemFont::create("Back to Menu", CC_CALLBACK_1(PauseMenu::sceneExitCallback, this));
+	exitItem->setColor(Color3B::BLACK);
+	exitItem->setScale(1.5f);
+	exitItem->setPosition(Vec2(origin.x + background->getContentSize().width +
+		exitItem->getContentSize().width / 3.5f, helpItem->getPositionY() - exitItem->getContentSize().height * 2));
+
+
 
 	auto menu = Menu::create(backItem, exitItem, helpItem, testItem, NULL);
 	menu->setPosition(Vec2::ZERO);

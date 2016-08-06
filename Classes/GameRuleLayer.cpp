@@ -69,7 +69,7 @@ bool GameRuleLayer::init(bool isBegin)
 	// БъЬт
 	auto label = Label::createWithTTF("Game Rule", "fonts/Marker Felt.ttf", 40);
 	label->setColor(Color3B::BLACK);
-	label->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height/2 + label->getContentSize().height * 4));
+	label->setPosition(Vec2(origin.x + visibleSize.width / 2 - label->getContentSize().width*1.5, origin.y + visibleSize.height/2 + label->getContentSize().height * 4));
 	this->addChild(label, 1);
 
 	TTFConfig config("fonts/1.ttf", 32);

@@ -90,11 +90,23 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		audio->preloadBackgroundMusic(file);
 		
 	}
+	audio->preloadBackgroundMusic("music/heroSelect.mp3");
+	audio->preloadBackgroundMusic("music/Battle.mp3");
+	audio->preloadBackgroundMusic("music/failure.mp3");
+	audio->preloadBackgroundMusic("music/WinMusic.mp3");
 	audio->preloadEffect("music/Gate_3_selected.mp3");
 	audio->preloadEffect("music/Gate_2_selected.mp3");
 	audio->preloadEffect("music/Gate_1_selected.mp3");
 	audio->preloadEffect("music/Page.mp3");
 	audio->preloadEffect("music/button.mp3");
+	audio->preloadEffect("music/shana.mp3");
+	audio->preloadEffect("music/kongfu.mp3");
+	audio->preloadEffect("music/bashen.mp3");
+	audio->preloadEffect("music/attack.mp3");
+	audio->preloadEffect("music/enemyAttack.mp3");
+	audio->preloadEffect("music/gateConfirm.mp3");
+	audio->preloadEffect("music/selectOver.mp3");
+	audio->preloadEffect("music/heroConfirm.mp3");
     return true;
 }
 

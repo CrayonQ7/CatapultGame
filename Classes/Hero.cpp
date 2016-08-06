@@ -168,11 +168,13 @@ void Hero::createHpBar(int p, int pr)
 	hpBar->setPercentage(100);
 	this->getParent()->addChild(hpBar, 3);
 	// ´´½¨À¶Ìõ
-	//mpBgSprite = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_mpBg.png"));
-	mpBgSprite = Sprite::create("Gate_mpBg1.png");
+	mpBgSprite = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_mpBg1.png"));
+	mpBgSprite->setScaleX(2);
+	//mpBgSprite = Sprite::create("Gate_mpBg1.png");
 	this->getParent()->addChild(mpBgSprite, 3);
-	//mpBar = ProgressTimer::create(Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_mp.png")));
-	mpBar = ProgressTimer::create(Sprite::create("Gate_mp1.png"));
+	mpBar = ProgressTimer::create(Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("Gate_mp1.png")));
+	mpBar->setScaleX(2);
+	//mpBar = ProgressTimer::create(Sprite::create("Gate_mp1.png"));
 	mpBar->setType(ProgressTimer::Type::BAR);
 	mpBar->setMidpoint(Vec2(0, 0.5f));
 	mpBar->setBarChangeRate(Vec2(1, 0));
@@ -183,11 +185,11 @@ void Hero::createHpBar(int p, int pr)
 	char cd[20];
 	sprintf(cdBg, "prop_%d_0.png", pr);
 	sprintf(cd, "prop_%d.png", pr);
-	//cdBgSprite = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(cdBg));
-	cdBgSprite = Sprite::create(cdBg);
+	cdBgSprite = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(cdBg));
+	//cdBgSprite = Sprite::create(cdBg);
 	this->getParent()->addChild(cdBgSprite, 3);
-	//cdBar = ProgressTimer::create(Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(cd)));
-	cdBar = ProgressTimer::create(Sprite::create(cd));
+	cdBar = ProgressTimer::create(Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(cd)));
+	//cdBar = ProgressTimer::create(Sprite::create(cd));
 	cdBar->setType(ProgressTimer::Type::BAR);
 	cdBar->setMidpoint(Vec2(0.5, 0));
 	cdBar->setBarChangeRate(Vec2(0, 1));

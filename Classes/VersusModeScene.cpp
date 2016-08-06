@@ -52,7 +52,7 @@ bool VersusModeScene::init()
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("plist/VersusModeScene.plist");
 
 	// * -----------------------±³¾°Í¼Æ¬---------------------------------- *
-	auto backGround = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("background.png"));
+	auto backGround = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("VMbackground.png"));
 	backGround->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 	auto scaleX = backGround->getTextureRect().getMaxX();
 	auto scaleY = backGround->getTextureRect().getMaxY();
@@ -203,15 +203,15 @@ void VersusModeScene::displayMapGate()
 void VersusModeScene::displayButton()
 {
 	start = MenuItemSprite::create(
-		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("startNormal.png")),
-		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("startSelected.png")),
+		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("VMstartNormal.png")),
+		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("VMstartSelected.png")),
 		CC_CALLBACK_1(VersusModeScene::startCallback, this));
-	start->setPosition(Vec2(visibleSize.width / 2 + origin.x - start->getContentSize().width / 2, start->getContentSize().height + origin.y + 50));
+	start->setPosition(Vec2(visibleSize.width / 2 + origin.x - start->getContentSize().width / 2, start->getContentSize().height + origin.y + 200));
 	restart = MenuItemSprite::create(
 		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("restartNormal.png")),
 		Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("restartSelected.png")),
 		CC_CALLBACK_1(VersusModeScene::restartCallback, this));
-	restart->setPosition(Vec2(visibleSize.width / 2 + origin.x + restart->getContentSize().width / 2, restart->getContentSize().height + origin.y + 50));
+	restart->setPosition(Vec2(visibleSize.width / 2 + origin.x + restart->getContentSize().width / 2, restart->getContentSize().height + origin.y + 200));
 	auto menu = Menu::create(start, restart, NULL);
 	menu->setPosition(Vec2::ZERO);
 	addChild(menu, 1);

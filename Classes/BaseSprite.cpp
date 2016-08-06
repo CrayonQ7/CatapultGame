@@ -69,6 +69,36 @@ cocos2d::CallFunc * BaseSprite::createIdleCallbackFunc()
 	return CallFunc::create(CC_CALLBACK_0(BaseSprite::runIdleAction, this));
 }
 
+void BaseSprite::setPosition(const cocos2d::Point & position)
+{
+	Sprite::setPosition(position);
+	this->updateBoxes();
+}
+
+BoundingBox BaseSprite::createBoundingBox(cocos2d::Point origin, cocos2d::Size size)
+{
+	BoundingBox boundingBox;
+	boundingBox.original.origin = origin;
+	boundingBox.original.size = size;
+	boundingBox.actual.origin = this->getPosition() + boundingBox.original.origin;
+	boundingBox.actual.size = size;
+	return boundingBox;
+}
+
+void BaseSprite::updateBoxes()
+{
+	bool isFlippedX = this->isFlippedX();
+	float x = 0.0f;
+	if (isFlippedX) {
+		x = this->getPosition().x - m_hitBox.original.origin.x;
+	}
+	else {
+		x = this->getPosition().x + m_hitBox.original.origin.x;
+	}
+	m_hitBox.actual.origin = Point(x, this->getPosition().y + m_hitBox.original.origin.y);
+	m_bodyBox.actual.origin = this->getPosition() + m_bodyBox.original.origin;
+}
+
 cocos2d::Animation * BaseSprite::createAnimation(const char * formatStr, int frameCount, int fps)
 {
 	cocos2d::Vector<SpriteFrame*>frames;

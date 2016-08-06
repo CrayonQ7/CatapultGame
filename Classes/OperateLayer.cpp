@@ -13,10 +13,10 @@ OperateLayer::~OperateLayer()
 {
 }
 
-OperateLayer * OperateLayer::create(int bgm)
+OperateLayer * OperateLayer::create(int bgm, int mode)
 {
 	OperateLayer* pRet = new(std::nothrow) OperateLayer();
-	if (pRet && pRet->init(bgm))
+	if (pRet && pRet->init(bgm, mode))
 	{
 		pRet->autorelease();
 		return pRet;
@@ -29,16 +29,17 @@ OperateLayer * OperateLayer::create(int bgm)
 		}
 	}
 
-bool OperateLayer::init(int bgm)
+bool OperateLayer::init(int bgm, int mode)
 {
 	bool ret = false;
 	do {
 		CC_BREAK_IF(!Layer::init());
-		//auto touchListener = EventListenerTouchAllAtOnce::create();  // 创建多点触摸监听器
-		//touchListener->onTouchesBegan = CC_CALLBACK_2(OperateLayer::onTouchesBegan, this);
-		//touchListener->onTouchesMoved = CC_CALLBACK_2(OperateLayer::onTouchesMoved, this);
-		//touchListener->onTouchesEnded = CC_CALLBACK_2(OperateLayer::onTouchesEnded, this);
-		//_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+		this->mode = mode;
+		auto touchListener = EventListenerTouchOneByOne::create() ;  // 创建多点触摸监听器
+		touchListener->onTouchBegan = CC_CALLBACK_2(OperateLayer::onTouchBegan, this);
+		touchListener->onTouchEnded = CC_CALLBACK_2(OperateLayer::onTouchEnded, this);
+		_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
 
 		//创建键盘监听器
 		auto keyboardListener = EventListenerKeyboard::create();
@@ -72,6 +73,14 @@ void OperateLayer::updateAngle(float f)
 {
 	hero1->rotateArrow(angle);
 }
+
+bool OperateLayer::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * event)
+{
+	if (mode == 2) amHero->pAttack();
+	
+	return true;
+}
+
 
 //void OperateLayer::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event * unused_event)
 //{
@@ -120,6 +129,11 @@ void OperateLayer::updateAngle(float f)
 //	hero->pStop();
 //}
 
+
+void OperateLayer::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * event)
+{
+}
+
 void OperateLayer::onKeyPressed(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event * event)
 {
 	switch (code)
@@ -157,46 +171,77 @@ void OperateLayer::onKeyPressed(cocos2d::EventKeyboard::KeyCode code, cocos2d::E
 		move2 = Point(0, -5);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_J:
-		keys[code] = true;
-		angle += 0.2;
-		if (angle > M_PI / 2) angle = M_PI / 2;
-		hero1->rotateArrow(angle);
-		//schedule(schedule_selector(OperateLayer::updateAngle, 0.1f));
+		if (mode == 1) {
+			keys[code] = true;
+			angle += 0.2;
+			if (angle > M_PI / 2) angle = M_PI / 2;
+			hero1->rotateArrow(angle);
+			//schedule(schedule_selector(OperateLayer::updateAngle, 0.1f));
+		}
+
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_K:
-		keys[code] = true;
-		angle -= 0.2;
-		if (angle < -M_PI / 2) angle = -M_PI / 2;
-		hero1->rotateArrow(angle);
-		//schedule(schedule_selector(OperateLayer::updateAngle, 0.1f));
+		if (mode == 1)
+		{
+			keys[code] = true;
+			angle -= 0.2;
+			if (angle < -M_PI / 2) angle = -M_PI / 2;
+			hero1->rotateArrow(angle);
+			//schedule(schedule_selector(OperateLayer::updateAngle, 0.1f));
+		}
+
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_9:
-		keys[code] = true;
-		angle += 0.2;
-		if (angle > M_PI / 2) angle = M_PI / 2;
-		hero2->rotateArrow(angle);
+		if (mode == 1)
+		{
+			keys[code] = true;
+			angle += 0.2;
+			if (angle > M_PI / 2) angle = M_PI / 2;
+			hero2->rotateArrow(angle);
+		}
+
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_8:
-		keys[code] = true;
-		angle -= 0.2;
-		if (angle < -M_PI / 2) angle = -M_PI / 2;
-		hero2->rotateArrow(angle);
+		if (mode == 1)
+		{
+			keys[code] = true;
+			angle -= 0.2;
+			if (angle < -M_PI / 2) angle = -M_PI / 2;
+			hero2->rotateArrow(angle);
+		}
+
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_SPACE:
-		keys[code] = true;
-		schedule(schedule_selector(OperateLayer::updatePercent1, 0.1f));
+		if (mode == 1)
+		{
+			keys[code] = true;
+			schedule(schedule_selector(OperateLayer::updatePercent1, 0.1f));
+		}
+
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_0:
-		keys[code] = true;
-		schedule(schedule_selector(OperateLayer::updatePercent2, 0.1f));
+		if (mode == 1)
+		{
+			keys[code] = true;
+			schedule(schedule_selector(OperateLayer::updatePercent2, 0.1f));
+		}
+
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_I:
-		if (hero1->mpBar->getPercentage() > 0 && hero1->canUseProp)
-			hero1->pUseProp();
+		if (mode == 1)
+		{
+			if (hero1->mpBar->getPercentage() > 0 && hero1->canUseProp)
+				hero1->pUseProp();
+		}
+
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_5:
-		if (hero2->mpBar->getPercentage() > 0 && hero2->canUseProp)
-			hero2->pUseProp();
+		if (mode == 1)
+		{
+			if (hero2->mpBar->getPercentage() > 0 && hero2->canUseProp)
+				hero2->pUseProp();
+		}
+
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE:
 		break;
@@ -283,24 +328,30 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 		keys[code] = false;
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_SPACE:
+		if (mode == 1)
+		{
+			keys[code] = false;
 
-		keys[code] = false;
+			SimpleAudioEngine::getInstance()->playEffect("music/Fire1.mp3", false, 1.0f, 1.0f, 1.0f);
 
-		SimpleAudioEngine::getInstance()->playEffect("music/Fire1.mp3", false, 1.0f, 1.0f, 1.0f);
+			unschedule(schedule_selector(OperateLayer::updatePercent1, 0.1f));
+			hero1->pAttack();
+			hero1->setPower(0);
+		}
 
-		unschedule(schedule_selector(OperateLayer::updatePercent1, 0.1f));
-		hero1->pAttack();
-		hero1->setPower(0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_0:
+		if (mode == 1)
+		{
+			keys[code] = false;
 
-		keys[code] = false;
+			SimpleAudioEngine::getInstance()->playEffect("music/Fire3.mp3", false, 1.0f, 1.0f, 1.0f);
 
-		SimpleAudioEngine::getInstance()->playEffect("music/Fire3.mp3", false, 1.0f, 1.0f, 1.0f);
+			unschedule(schedule_selector(OperateLayer::updatePercent2, 0.1f));
+			hero2->pAttack();
+			hero2->setPower(0);
+		}
 
-		unschedule(schedule_selector(OperateLayer::updatePercent2, 0.1f));
-		hero2->pAttack();
-		hero2->setPower(0);
 		break;
 	case cocos2d::EventKeyboard::KeyCode::KEY_I:
 		break;
@@ -308,7 +359,11 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 		break;
 	//case cocos2d::EventKeyboard::KeyCode::KEY_BACKSPACE:
 	case cocos2d::EventKeyboard::KeyCode::KEY_P:
-		popPauseMenu();
+		if (mode == 1)
+		{
+			popPauseMenu();
+		}
+		
 		break;
 	default:
 		keys[code] = false;
@@ -318,8 +373,12 @@ void OperateLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::
 
 void OperateLayer::update(float f)
 {
-    hero1->pWalk(move1);
-	hero2->pWalk(move2);
+	if (mode == 1)
+	{
+		hero1->pWalk(move1);
+		hero2->pWalk(move2);
+	}
+	else if (mode == 2) amHero->pWalk(move1);
 }
 
 void OperateLayer::popPauseMenu()

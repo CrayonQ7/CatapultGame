@@ -13,6 +13,13 @@ typedef enum
 	ACTION_STATE_DEAD
 }ActionState;
 
+// 碰撞盒
+typedef struct _BoundingBox
+{
+	cocos2d::Rect actual; // 以屏幕左下角为原点，碰撞检测时使用
+	cocos2d::Rect original; // 以精灵左下角为原点，用来更新actual
+}BoundingBox;
+
 class BaseSprite : public cocos2d::Sprite
 {
 public:
@@ -47,6 +54,16 @@ public:
 
 	// “立即返回空闲状态”回调函数
 	cocos2d::CallFunc* createIdleCallbackFunc();
+
+
+
+    CC_SYNTHESIZE(BoundingBox, m_bodyBox, BodyBox);
+	CC_SYNTHESIZE(BoundingBox, m_hitBox, HitBox);
+
+	virtual void setPosition(const cocos2d::Point &position);
+	BoundingBox createBoundingBox(cocos2d::Point origin, cocos2d::Size size);
+	void updateBoxes();
+
 protected:
 	// 根据图片路径，帧数，每秒显示的帧数来创建动画
 	static cocos2d::Animation* createAnimation(const char* formatStr, int frameCount, int fps);
